@@ -1,20 +1,23 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import {ImageBackground, StyleSheet, Text, View} from 'react-native';
+import Navigator from './routes/stack-navigator'
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+const App = () => {
+    return (
+        <View style={styles.container}>
+            <ImageBackground source={require('../PistolRange/assets/tlo.jpg')} resizeMode="cover" style={styles.background}>
+                <Navigator/>
+            </ImageBackground>
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+    container: {
+        flex: 1,
+    },background:{
+        flex: 1,
+    }
 });
+
+export default App;
