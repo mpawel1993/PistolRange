@@ -2,8 +2,8 @@ import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 
 const ActivityPage = ({ navigation }) =>{
 
-    const navigateToLearning = () => {
-        navigation.navigate('LearningPage');
+    const navigateToSetOfQuestions = () => {
+        navigation.navigate('SetOfQuestionsPage');
     }
 
     const navigateToExam = () => {
@@ -11,7 +11,7 @@ const ActivityPage = ({ navigation }) =>{
     }
 
     return(<View style={styles.container}>
-        <TouchableOpacity onPress={()=>navigateToLearning()}>
+        <TouchableOpacity onPress={()=>navigateToSetOfQuestions()}>
             <Image source={require('../assets/learning.png')} style={styles.button}/>
         </TouchableOpacity>
         <TouchableOpacity onPress={()=>navigateToExam()}>

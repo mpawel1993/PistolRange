@@ -1,9 +1,14 @@
 import {Image, View, StyleSheet, Dimensions, Text, TouchableOpacity} from "react-native";
+import Field from "./Field";
 
 const WelcomePage = ({ navigation }) =>{
 
     const handleTap = () =>{
         navigation.navigate('StartPage');
+    }
+
+    function cons() {
+        console.log('Taped');
     }
 
     return (<View style={styles.container}>

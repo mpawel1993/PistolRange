@@ -1,4 +1,5 @@
 import {Image, View, StyleSheet, Dimensions, Text, TouchableOpacity} from "react-native";
+import Field from "./Field";
 
 const StartPage = ({ navigation }) =>{
 
@@ -9,7 +10,7 @@ const StartPage = ({ navigation }) =>{
     return (<View style={styles.container}>
         <Text style={styles.text} >Witaj w darmowej aplikacji która pomoże ci przygotować się do egzaminu teoretycznego</Text>
         <TouchableOpacity onPress={()=>handleTap()}>
-            <Image source={require('../assets/let_start.png')} style={styles.button}/>
+            <Field text={'ZACZYNAMY'}/>
         </TouchableOpacity>
     </View>)
 }
