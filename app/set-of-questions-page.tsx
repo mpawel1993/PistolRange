@@ -1,5 +1,5 @@
 import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
-import Field from "./Field";
+import Field from "./field";
 
 const SetOfQuestionsPage = ({ navigation }) =>{
 
@@ -9,6 +9,9 @@ const SetOfQuestionsPage = ({ navigation }) =>{
     }
 
     return(<View style={styles.container}>
+        <TouchableOpacity onPress={()=>handleTap()}>
+            <Field text={'Wszystkie'}/>
+        </TouchableOpacity>
         <TouchableOpacity onPress={()=>handleTap()}>
             <Field text={'Ustawa o Broni i Amunicji'}/>
         </TouchableOpacity>

@@ -1,4 +1,5 @@
 import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import Field from "./field";
 
 const ActivityPage = ({ navigation }) =>{
 
@@ -7,15 +8,15 @@ const ActivityPage = ({ navigation }) =>{
     }
 
     const navigateToExam = () => {
-        console.log('Activity Page');
+        navigation.navigate('ExamPage');
     }
 
     return(<View style={styles.container}>
         <TouchableOpacity onPress={()=>navigateToSetOfQuestions()}>
-            <Image source={require('../assets/learning.png')} style={styles.button}/>
+            <Field text={'NAUKA'}/>
         </TouchableOpacity>
         <TouchableOpacity onPress={()=>navigateToExam()}>
-            <Image source={require('../assets/exam.png')} style={styles.button}/>
+            <Field text={'EGZAMIN'}/>
         </TouchableOpacity>
     </View>)
 }

@@ -5,6 +5,7 @@ import StartPage from "../app/start-page";
 import ActivityPage from "../app/activity-page";
 import SetOfQuestionsPage from "../app/set-of-questions-page";
 import LeariningPage from "../app/learining-page";
+import ExamPage from "../app/exam-page";
 
 
 const HomeStack = createStackNavigator(
@@ -39,6 +40,13 @@ const HomeStack = createStackNavigator(
         },
         SetOfQuestionsPage: {
             screen: SetOfQuestionsPage,
+            navigationOptions: {
+                headerShown: false,
+                animationEnabled: false
+            },
+        },
+        ExamPage: {
+            screen: ExamPage,
             navigationOptions: {
                 headerShown: false,
                 animationEnabled: false

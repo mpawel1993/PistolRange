@@ -1,0 +1,62 @@
+[
+  {
+    "id": "1",
+    "value": "Bronią, w rozumieniu ustawy o broni i amunicji,nie jest: ",
+    "goodAnswer": "c",
+    "paragraph": "(art. 4 ust. 1 uobia)",
+    "possibleAnswer": [
+      {
+        "id": "a",
+        "value": "broń palna"
+      },
+      {
+        "id": "b",
+        "value": "broń pneumatyczna"
+      },
+      {
+        "id": "c",
+        "value": "broń ostra"
+      }
+    ]
+  },
+  {
+    "id": "2",
+    "value": "Bronią, w rozumieniu ustawy o broni i amunicji, jest: ",
+    "goodAnswer": "a",
+    "paragraph": "(art. 4 ust. 1 uobia)",
+    "possibleAnswer": [
+      {
+        "id": "a",
+        "value": "miotacz gazu obezwładniającego;"
+      },
+      {
+        "id": "b",
+        "value": "miotacz gazu łzawiącego"
+      },
+      {
+        "id": "c",
+        "value": "miotacz gazu pieprzowego"
+      }
+    ]
+  },
+  {
+    "id": "3",
+    "value": "Bronią, w rozumieniu ustawy o broni i amunicji, nie jest: ",
+    "goodAnswer": "b",
+    "paragraph": "(art. 4 ust. 1 uobia)",
+    "possibleAnswer": [
+      {
+        "id": "a",
+        "value": "kastet"
+      },
+      {
+        "id": "b",
+        "value": "nóż"
+      },
+      {
+        "id": "c",
+        "value": "pałka wykonana z drewna lub innego ciężkiego i twardego materiału, imitująca kij bejsbolowy"
+      }
+    ]
+  }
+]

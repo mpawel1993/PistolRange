@@ -25,7 +25,6 @@ const styles = StyleSheet.create({
         borderRadius:10,
         height:100,
         width: 300
-
     },text:{
         fontSize:20,
         color:'#2b2a29'

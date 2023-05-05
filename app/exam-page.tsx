@@ -1,10 +1,10 @@
-import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import AnswerField from "./answer-field";
 import NavigationField from "./navigation-field";
 import {PossibleAnswer, Question} from "../model/model";
 import {useEffect, useState} from "react";
 
-const LearningPage = ({ navigation }) =>{
+const ExamPage = ({ navigation }) =>{
 
     const questions: Question[]  = JSON.parse(JSON.stringify(require('../assets/questionList.json')));
     const [questionId, setQuestionId] = useState(1);
@@ -41,7 +41,7 @@ const LearningPage = ({ navigation }) =>{
     }
 
     return(<View style={styles.container}>
-        <Text style={styles.header}>Nauka</Text>
+        <Text style={styles.header}>Egzamin</Text>
         <View>
             <Text style={styles.text}>{actualQuestion.value}</Text>
         </View>
@@ -91,4 +91,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default LearningPage;
+export default ExamPage;

@@ -1,5 +1,6 @@
 import {Image, View, StyleSheet, Dimensions, Text, TouchableOpacity} from "react-native";
-import Field from "./Field";
+import Field from "./field";
+import {PossibleAnswer, Question} from "../model/model";
 
 const WelcomePage = ({ navigation }) =>{
 
