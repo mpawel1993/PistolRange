@@ -1,19 +1,21 @@
-import {Image, View, StyleSheet, Dimensions, Text, TouchableOpacity} from "react-native";
-import Field from "./field";
-import {PossibleAnswer, Question} from "../model/model";
+import {Image, View, StyleSheet, TouchableOpacity} from "react-native";
+import {useEffect} from "react";
 
-const WelcomePage = ({ navigation }) =>{
+const WelcomePage = ({ navigation }) => {
 
-    const handleTap = () =>{
+    const navigateToStartPage = () => {
         navigation.navigate('StartPage');
     }
 
-    function cons() {
-        console.log('Taped');
-    }
+    useEffect(() => {
+        const toRef = setTimeout(() => {
+            navigateToStartPage();
+        }, 3000);
+    }, []);
+
 
     return (<View style={styles.container}>
-        <TouchableOpacity onPress={()=>handleTap()}>
+        <TouchableOpacity onPress={() => navigateToStartPage()}>
             <Image source={require('../assets/welcome-page-logo.png')} style={styles.button}/>
         </TouchableOpacity>
     </View>)

@@ -14,6 +14,8 @@ const LearningPage = ({ navigation }) =>{
     const [bAnswer , setBAnswer] = useState({id:'b' , value:''} as PossibleAnswer);
     const [cAnswer , setCAnswer] = useState({id:'c' , value:''} as PossibleAnswer);
 
+
+
     useEffect(() => {
         afterComponentMount();
     }, []);
@@ -47,24 +49,26 @@ const LearningPage = ({ navigation }) =>{
         </View>
 
         <TouchableOpacity onPress={() => handlePickUp('a')}>
-            <AnswerField option={aAnswer.id} possibleAnswer={aAnswer.value}/>
+            <AnswerField  option={aAnswer.id} possibleAnswer={aAnswer.value}/>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => handlePickUp('b')}>
-            <AnswerField option={bAnswer.id} possibleAnswer={bAnswer.value}/>
+            <AnswerField  option={bAnswer.id} possibleAnswer={bAnswer.value}/>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => handlePickUp('c')} id={'elo'}>
-            <AnswerField option={cAnswer.id} possibleAnswer={cAnswer.value}/>
+            <AnswerField  option={cAnswer.id} possibleAnswer={cAnswer.value}/>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => handleNextQuestion()}>
-            <NavigationField text={'NASTĘPNE'}/>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => handlePreviousQuestion()}>
-            <NavigationField text={'POPRZEDNIE'}/>
-        </TouchableOpacity>
-        <TouchableOpacity>
-            <NavigationField text={'KONIEC'}/>
-        </TouchableOpacity>
+        <View style={{flexDirection: 'row', paddingTop:15}}>
+            <TouchableOpacity onPress={() => handleNextQuestion()}>
+                <NavigationField text={'NASTĘPNE'}/>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => handlePreviousQuestion()}>
+                <NavigationField text={'POPRZEDNIE'}/>
+            </TouchableOpacity>
+            <TouchableOpacity>
+                <NavigationField text={'KONIEC'}/>
+            </TouchableOpacity>
+        </View>
 
     </View>)
 }

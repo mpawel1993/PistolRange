@@ -22,10 +22,10 @@ const styles = StyleSheet.create({
         borderColor:'#fefefe',
         borderRadius:10,
         height:50,
-        width: 150,
+        width: 100,
 
     },text:{
-        fontSize:20,
+        fontSize:15,
         color:'#2b2a29'
     }
 });
