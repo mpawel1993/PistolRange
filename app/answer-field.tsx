@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
         width: 300
 
     },text:{
-        fontSize:20,
+        fontSize:15,
         color:'#2b2a29'
     },answerOption:{
         color:'white',

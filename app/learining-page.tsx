@@ -2,7 +2,7 @@ import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import AnswerField from "./answer-field";
 import NavigationField from "./navigation-field";
 import {PossibleAnswer, Question} from "../model/model";
-import {useEffect, useLayoutEffect, useState} from "react";
+import {useEffect, useState} from "react";
 
 const LearningPage = ({navigation}) => {
     let isQuestionsLoaded = false;
@@ -17,10 +17,6 @@ const LearningPage = ({navigation}) => {
     } as Question);
     const [nextButtonDisabled, setNextButtonDisabled] = useState(false);
     const [previousDisabled, setPreviousButtonDisabled] = useState(false);
-
-    const handleQuit = () => {
-        navigation.navigate('ActivityPage');
-    }
 
     //After Component Mount
     useEffect(() => {
@@ -42,31 +38,32 @@ const LearningPage = ({navigation}) => {
         }
     }, [questions]);
 
-    useEffect(() => {
-    }, [actualQuestion]);
-
     const chooseQuestion = (questionId: number) => {
-        const question = questions.filter(x => {
-            return x.id == questionId;
-        })[0];
+        const question = questions.filter(x => x.id == questionId)[0];
         setActualQuestion(question);
     }
 
-    const handlePickUp = async (option) => {
+    const handleQuit = () => {
+        navigation.navigate('ActivityPage');
+    }
+
+    const handlePickUp = (option) => {
         let question = actualQuestion;
         question.actualAnswer = undefined;
         question.possibleAnswer.map(x => x.gradient = ['green', 'green']);
         setActualQuestion({...actualQuestion, question});
-        question.possibleAnswer.filter(x => x.id === option)[0].gradient = ['yellow', 'yellow'];
+
+        question.possibleAnswer.filter(x => x.id == option)[0].gradient = ['yellow', 'yellow'];
         question.actualAnswer = option;
         setActualQuestion({...actualQuestion, question});
     }
 
     const handleNextQuestion = () => {
         let question = actualQuestion;
-
-        let id = question.id
-        id++;
+        const id = question.id;
+        let nextId = JSON.parse(JSON.stringify(id));
+        nextId++;
+        let next = questions.filter(x => x.id == nextId)[0]
 
         if (id === questions.length) {
             setNextButtonDisabled(true);
@@ -75,35 +72,32 @@ const LearningPage = ({navigation}) => {
         }
 
         if (question.actualAnswer === question.goodAnswer) {
-            setActualQuestion(questions.filter(x => x.id = id)[0]);
+            setActualQuestion(next);
         } else {
-            question.possibleAnswer.filter(x => x.id === question.actualAnswer)[0].gradient = ['red', 'red'];
+            question.possibleAnswer.filter(x => x.id == question.actualAnswer)[0].gradient = ['red', 'red'];
             setActualQuestion({...actualQuestion, question});
         }
-
     }
 
     const handlePreviousQuestion = () => {
-        let id = actualQuestion.id;
-        id--;
+        const id = actualQuestion.id;
+        let prevId = JSON.parse(JSON.stringify(id));
+        prevId--;
+        let previous = questions.filter(x => x.id == prevId)[0]
 
-        if (id === 1) {
-            setPreviousButtonDisabled(true);
+        if (id === questions.length) {
+            setNextButtonDisabled(true);
         } else {
-            setNextButtonDisabled(false);
+            setPreviousButtonDisabled(false);
         }
 
-        const question = questions.filter(x => {
-            return x.id == id;
-        })[0];
-
-        setActualQuestion(question);
+        setActualQuestion(previous);
     }
 
     return (<View style={styles.container}>
         <Text style={styles.header}>Nauka</Text>
         <View>
-            <Text style={styles.text}>{actualQuestion.id}. {actualQuestion.value}</Text>
+            <Text style={styles.text}>{actualQuestion.id}/{questions.length}. {actualQuestion.value}</Text>
         </View>
 
         <TouchableOpacity onPress={() => handlePickUp('a')}>
@@ -143,10 +137,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: 1,
-    },text:{
-        fontSize:25,
-        color:'#98c135',
-        padding:5
+    },text: {
+        fontSize: 20,
+        color: '#98c135',
+        padding: 5
     },button:{
         width:300,
         height:100,
