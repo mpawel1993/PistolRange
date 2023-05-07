@@ -1,16 +1,15 @@
-import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {StyleSheet, Text, View} from "react-native";
 import {LinearGradient} from "expo-linear-gradient";
-import {useState} from "react";
 
-const AnswerField = ({option, possibleAnswer}) =>{
+const AnswerField = ({option, possibleAnswer, gradientColours}) => {
 
-    return(<View style={styles.container}>
+    return (<View style={styles.container}>
         <LinearGradient style={styles.gradient}
-                         colors={['#94c02b', '#71912a']}
-                        start={{ x: 0, y: 0}}
-                        end={{ x: 1, y: 1 }}>
-            <View style={[{flexDirection:'row', alignItems:'center'}]}>
-                <View style={[{flex:1,flexDirection:'row'}]}>
+                        colors={gradientColours == undefined ? ['blue', 'blue'] : gradientColours}
+                        start={{x: 0, y: 0}}
+                        end={{x: 1, y: 1}}>
+            <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
+                <View style={[{flex: 1, flexDirection: 'row'}]}>
                     <Text style={styles.answerOption}>{option.toUpperCase()}</Text>
                 </View>
                 <View style={[{flex: 5, justifyContent:'space-evenly', marginVertical:10}]}>

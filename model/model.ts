@@ -4,9 +4,11 @@ export interface Question {
     paragraph: string;
     possibleAnswer: PossibleAnswer[];
     goodAnswer: string;
+    actualAnswer:string;
 }
 
 export interface PossibleAnswer {
     id: string;
     value: string;
+    gradient: any;
 }

@@ -1,5 +1,6 @@
 import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import Field from "./field";
+import {Question} from "../model/model";
 
 const ActivityPage = ({ navigation }) =>{
 
