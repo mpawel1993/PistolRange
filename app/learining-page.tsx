@@ -17,6 +17,7 @@ const LearningPage = ({navigation}) => {
     } as Question);
     const [nextButtonDisabled, setNextButtonDisabled] = useState(false);
     const [previousDisabled, setPreviousButtonDisabled] = useState(false);
+    const [isModuleFinished, setIsModuleFinished] = useState(false);
 
     //After Component Mount
     useEffect(() => {
@@ -33,15 +34,27 @@ const LearningPage = ({navigation}) => {
             que.map(a => {
                 a.possibleAnswer.map(b => b.gradient = ['#94c02b', '#71912a']);
             });
-            chooseQuestion(1);
+            const question = questions.filter(x => x.id == 100)[0];
+            setActualQuestion(question);
             isQuestionsLoaded = true;
         }
     }, [questions]);
 
-    const chooseQuestion = (questionId: number) => {
-        const question = questions.filter(x => x.id == questionId)[0];
-        setActualQuestion(question);
-    }
+    useEffect(() => {
+        if (actualQuestion.id == 1) {
+            setNextButtonDisabled(false);
+            setPreviousButtonDisabled(true);
+        } else if (actualQuestion.id <= 1) {
+            setActualQuestion(questions.filter(x => x.id == 1)[0])
+            setNextButtonDisabled(false);
+            setPreviousButtonDisabled(true);
+        } else if (actualQuestion.id >= questions.length) {
+            setActualQuestion(questions.filter(x => x.id == questions.length)[0])
+        } else {
+            setNextButtonDisabled(false);
+            setPreviousButtonDisabled(false);
+        }
+    }, [actualQuestion]);
 
     const handleQuit = () => {
         navigation.navigate('ActivityPage');
@@ -52,7 +65,6 @@ const LearningPage = ({navigation}) => {
         question.actualAnswer = undefined;
         question.possibleAnswer.map(x => x.gradient = ['green', 'green']);
         setActualQuestion({...actualQuestion, question});
-
         question.possibleAnswer.filter(x => x.id == option)[0].gradient = ['yellow', 'yellow'];
         question.actualAnswer = option;
         setActualQuestion({...actualQuestion, question});
@@ -60,22 +72,41 @@ const LearningPage = ({navigation}) => {
 
     const handleNextQuestion = () => {
         let question = actualQuestion;
-        const id = question.id;
-        let nextId = JSON.parse(JSON.stringify(id));
-        nextId++;
-        let next = questions.filter(x => x.id == nextId)[0]
 
-        if (id === questions.length) {
-            setNextButtonDisabled(true);
-        } else {
-            setPreviousButtonDisabled(false);
-        }
+        if (actualQuestion.actualAnswer !== undefined) {
+            let nextId = JSON.parse(JSON.stringify(question.id));
+            nextId++;
+            let next = questions.filter(x => x.id == nextId)[0]
+            if (next === undefined) {
+                if (question.actualAnswer === question.goodAnswer) {
+                    setIsModuleFinished(true);
+                    questions[question.id - 1].isButtonsDisabled = true
+                    setQuestions(questions);
+                } else {
+                    question.possibleAnswer.filter(x => x.id == question.actualAnswer)[0].gradient = ['red', 'red'];
+                    setActualQuestion({...actualQuestion, question});
+                }
+            } else {
+                if (!question.isButtonsDisabled) {
+                    const id = question.id;
+                    if (id === questions.length) {
+                        setNextButtonDisabled(true);
+                    } else {
+                        setPreviousButtonDisabled(false);
+                    }
 
-        if (question.actualAnswer === question.goodAnswer) {
-            setActualQuestion(next);
-        } else {
-            question.possibleAnswer.filter(x => x.id == question.actualAnswer)[0].gradient = ['red', 'red'];
-            setActualQuestion({...actualQuestion, question});
+                    if (question.actualAnswer === question.goodAnswer) {
+                        questions[id - 1].isButtonsDisabled = true
+                        setQuestions(questions);
+                        setActualQuestion(next);
+                    } else {
+                        question.possibleAnswer.filter(x => x.id == question.actualAnswer)[0].gradient = ['red', 'red'];
+                        setActualQuestion({...actualQuestion, question});
+                    }
+                } else {
+                    setActualQuestion(next);
+                }
+            }
         }
     }
 
@@ -100,21 +131,25 @@ const LearningPage = ({navigation}) => {
             <Text style={styles.text}>{actualQuestion.id}/{questions.length}. {actualQuestion.value}</Text>
         </View>
 
-        <TouchableOpacity onPress={() => handlePickUp('a')}>
+        <TouchableOpacity disabled={actualQuestion.isButtonsDisabled} onPress={() => handlePickUp('a')}>
             <AnswerField gradientColours={actualQuestion.possibleAnswer.filter(x => x.id === 'a')[0].gradient}
                          option={actualQuestion.possibleAnswer.filter(x => x.id === 'a')[0].id}
                          possibleAnswer={actualQuestion.possibleAnswer.filter(x => x.id === 'a')[0].value}/>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => handlePickUp('b')}>
+        <TouchableOpacity disabled={actualQuestion.isButtonsDisabled} onPress={() => handlePickUp('b')}>
             <AnswerField gradientColours={actualQuestion.possibleAnswer.filter(x => x.id === 'b')[0].gradient}
                          option={actualQuestion.possibleAnswer.filter(x => x.id === 'b')[0].id}
                          possibleAnswer={actualQuestion.possibleAnswer.filter(x => x.id === 'b')[0].value}/>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => handlePickUp('c')}>
+        <TouchableOpacity disabled={actualQuestion.isButtonsDisabled} onPress={() => handlePickUp('c')}>
             <AnswerField gradientColours={actualQuestion.possibleAnswer.filter(x => x.id === 'c')[0].gradient}
                          option={actualQuestion.possibleAnswer.filter(x => x.id === 'c')[0].id}
                          possibleAnswer={actualQuestion.possibleAnswer.filter(x => x.id === 'c')[0].value}/>
         </TouchableOpacity>
+
+        <View>
+            {isModuleFinished ? <Text style={styles.text}>Brawo, ukonczyles modul</Text> : ''}
+        </View>
 
         <View style={{flexDirection: 'row', paddingTop: 15}}>
             <TouchableOpacity disabled={previousDisabled} onPress={() => handlePreviousQuestion()}>

@@ -2,6 +2,8 @@
   "expo": {
     "name": "PistolRange",
     "slug": "PistolRange",
+    "privacy": "public",
+    "description": "elo",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -15,16 +17,29 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.mpawel1993.PistolRange"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.mpawel1993.PistolRange"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "c830b607-cd7d-4e80-80cc-14928091696e"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/c830b607-cd7d-4e80-80cc-14928091696e"
     }
   }
 }

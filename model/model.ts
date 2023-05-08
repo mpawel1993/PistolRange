@@ -5,6 +5,7 @@ export interface Question {
     possibleAnswer: PossibleAnswer[];
     goodAnswer: string;
     actualAnswer:string;
+    isButtonsDisabled: boolean;
 }
 
 export interface PossibleAnswer {

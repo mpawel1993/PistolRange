@@ -6,6 +6,8 @@ import ActivityPage from "../app/activity-page";
 import SetOfQuestionsPage from "../app/set-of-questions-page";
 import LeariningPage from "../app/learining-page";
 import ExamPage from "../app/exam-page";
+import ExamSummary from "../app/exam-summary";
+import FinishLearning from "../app/finish-learning";
 
 
 const HomeStack = createStackNavigator(
@@ -51,10 +53,29 @@ const HomeStack = createStackNavigator(
                 headerShown: false,
                 animationEnabled: false
             },
+        },
+        ExamSummary: {
+            screen: ExamSummary,
+            navigationOptions: {
+                headerShown: false,
+                animationEnabled: false
+            },
+        },
+        FinishLearning: {
+            screen: FinishLearning,
+            navigationOptions: {
+                headerShown: false,
+                animationEnabled: false
+            },
         }
     },
     {
-        transparentCard: true
+        defaultNavigationOptions: {
+
+            cardStyle: {
+                backgroundColor: "transparent"
+            }
+        }
     }
 );
 export default createAppContainer(HomeStack);

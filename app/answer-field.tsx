@@ -30,7 +30,6 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor:'#fefefe',
         borderRadius:10,
-        height:100,
         width: 300
 
     },text:{
@@ -39,7 +38,7 @@ const styles = StyleSheet.create({
     },answerOption:{
         color:'white',
         fontSize:40,
-        paddingLeft:10
+        paddingLeft:10,
     }
 });
 
