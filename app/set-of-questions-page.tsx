@@ -11,21 +11,21 @@ const SetOfQuestionsPage = ({ navigation }) =>{
         <TouchableOpacity onPress={()=>handleTap()}>
             <Field text={'Wszystkie'}/>
         </TouchableOpacity>
-        <TouchableOpacity onPress={()=>handleTap()}>
-            <Field text={'Ustawa o Broni i Amunicji'}/>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={()=>handleTap()}>
-            <Field text={'Przechowywanie i noszenie Broni'}/>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={()=>handleTap()}>
-            <Field text={'Przewożenie broni środkami transportu publicznego'}/>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={()=>handleTap()}>
-            <Field text={'Sankcje Karne Pytania'}/>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={()=>handleTap()}>
-            <Field text={'Obrona Konieczna i Stan Wyższej Konieczności'}/>
-        </TouchableOpacity>
+        {/*<TouchableOpacity onPress={()=>handleTap()}>*/}
+        {/*    <Field text={'Ustawa o Broni i Amunicji'}/>*/}
+        {/*</TouchableOpacity>*/}
+        {/*<TouchableOpacity onPress={()=>handleTap()}>*/}
+        {/*    <Field text={'Przechowywanie i noszenie Broni'}/>*/}
+        {/*</TouchableOpacity>*/}
+        {/*<TouchableOpacity onPress={()=>handleTap()}>*/}
+        {/*    <Field text={'Przewożenie broni środkami transportu publicznego'}/>*/}
+        {/*</TouchableOpacity>*/}
+        {/*<TouchableOpacity onPress={()=>handleTap()}>*/}
+        {/*    <Field text={'Sankcje Karne Pytania'}/>*/}
+        {/*</TouchableOpacity>*/}
+        {/*<TouchableOpacity onPress={()=>handleTap()}>*/}
+        {/*    <Field text={'Obrona Konieczna i Stan Wyższej Konieczności'}/>*/}
+        {/*</TouchableOpacity>*/}
     </View>)
 }
 

@@ -10,14 +10,14 @@ const WelcomePage = ({ navigation }) => {
     useEffect(() => {
         const toRef = setTimeout(() => {
             navigateToStartPage();
-        }, 3000);
+        }, 2000);
     }, []);
 
 
     return (<View style={styles.container}>
-        <TouchableOpacity onPress={() => navigateToStartPage()}>
-            <Image source={require('../assets/welcome-page-logo.png')} style={styles.button}/>
-        </TouchableOpacity>
+        <Image source={require('../assets/welcome-page-logo.png')} style={styles.button}/>
+        {/*<TouchableOpacity onPress={() => navigateToStartPage()}>*/}
+        {/*</TouchableOpacity>*/}
     </View>)
 }
 

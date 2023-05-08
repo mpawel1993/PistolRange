@@ -34,7 +34,7 @@ const LearningPage = ({navigation}) => {
             que.map(a => {
                 a.possibleAnswer.map(b => b.gradient = ['#94c02b', '#71912a']);
             });
-            const question = questions.filter(x => x.id == 100)[0];
+            const question = questions.filter(x => x.id == 1)[0];
             setActualQuestion(question);
             isQuestionsLoaded = true;
         }
