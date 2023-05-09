@@ -7,9 +7,11 @@ import {useEffect, useState} from "react";
 const LearningPage = ({navigation}) => {
     let isQuestionsLoaded = false;
 
-    const baseQuestions: Question[] = JSON.parse(JSON.stringify(require('../assets/questionList.json')));
+    const [params, setParams] = useState(navigation.state);
+
     const [questions, setQuestions] = useState([] as Question[]); //Filtered questions list
     const [actualQuestion, setActualQuestion] = useState({//Actual Loaded Questions
+        id:1,
         value: '', possibleAnswer:
             [{id: 'a', value: '', gradient: ['white', 'white']} as PossibleAnswer,
                 {id: 'b', value: '', gradient: ['white', 'white']} as PossibleAnswer,
@@ -21,12 +23,12 @@ const LearningPage = ({navigation}) => {
 
     //After Component Mount
     useEffect(() => {
-        let que = baseQuestions.map(x => Object.assign({}, x));
+        let que = params.params.questions.map(x => Object.assign({}, x));
         que.map(a => {
             a.possibleAnswer.map(b => b.gradient = ['#94c02b', '#71912a']);
         });
         setQuestions(que);
-    }, []);
+    }, [params]);
 
     useEffect(() => {
         if (questions.length !== 0 && !isQuestionsLoaded) {
@@ -79,6 +81,7 @@ const LearningPage = ({navigation}) => {
             let next = questions.filter(x => x.id == nextId)[0]
             if (next === undefined) {
                 if (question.actualAnswer === question.goodAnswer) {
+                    question.possibleAnswer.filter(x => x.id == question.actualAnswer)[0].gradient = ['orange', 'orange'];
                     setIsModuleFinished(true);
                     questions[question.id - 1].isButtonsDisabled = true
                     setQuestions(questions);
@@ -96,6 +99,7 @@ const LearningPage = ({navigation}) => {
                     }
 
                     if (question.actualAnswer === question.goodAnswer) {
+                        question.possibleAnswer.filter(x => x.id == question.actualAnswer)[0].gradient = ['orange', 'orange'];
                         questions[id - 1].isButtonsDisabled = true
                         setQuestions(questions);
                         setActualQuestion(next);

@@ -16,9 +16,8 @@ const ActivityPage = ({ navigation }) =>{
         <TouchableOpacity onPress={()=>navigateToSetOfQuestions()}>
             <Field text={'NAUKA'}/>
         </TouchableOpacity>
-        {/*<TouchableOpacity onPress={()=>navigateToExam()}>*/}
-        {/*    <Field text={'EGZAMIN'}/>*/}
-        {/*</TouchableOpacity>*/}
+        <Field text={'EGZAMIN(Niedostepne)'}/>
+        {/*<TouchableOpacity onPress={()=>navigateToExam()}></TouchableOpacity>*/}
     </View>)
 }
 
