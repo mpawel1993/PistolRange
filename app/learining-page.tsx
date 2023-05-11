@@ -65,7 +65,7 @@ const LearningPage = ({navigation}) => {
     const handlePickUp = (option) => {
         let question = actualQuestion;
         question.actualAnswer = undefined;
-        question.possibleAnswer.map(x => x.gradient = ['green', 'green']);
+        question.possibleAnswer.map(x => x.gradient = ['#94c02b', '#71912a']);
         setActualQuestion({...actualQuestion, question});
         question.possibleAnswer.filter(x => x.id == option)[0].gradient = ['yellow', 'yellow'];
         question.actualAnswer = option;
