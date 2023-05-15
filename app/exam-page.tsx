@@ -133,7 +133,7 @@ const ExamPage = ({navigation}) => {
     }
 
     return (<View style={styles.container}>
-        <Text style={styles.header}>Nauka</Text>
+        <Text style={styles.header}>EGZAMIN</Text>
         <View>
             <Text style={styles.text}>{actualQuestion.id}/{questions.length}. {actualQuestion.value}</Text>
         </View>

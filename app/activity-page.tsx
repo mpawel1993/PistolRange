@@ -1,6 +1,7 @@
-import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import Field from "./field";
 import {Question} from "../model/model";
+import React from "react";
 
 const ActivityPage = ({ navigation }) =>{
 
@@ -43,14 +44,21 @@ const ActivityPage = ({ navigation }) =>{
         });
     }
 
-    return(<View style={styles.container}>
-        <TouchableOpacity onPress={()=>navigateToSetOfQuestions()}>
-            <Field text={'NAUKA'}/>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={()=>navigateToExam()}>
-            <Field text={'EGZAMINc'}/>
-        </TouchableOpacity>
-    </View>)
+    return(
+        <View style={styles.container}>
+            <Text style={styles.text} >Witaj w darmowej aplikacji</Text>
+            <Text style={styles.text} >która pomoże ci przygotować się</Text>
+            <Text style={styles.text} >do egzaminu teoretycznego</Text>
+            <Text style={styles.text} />
+            <Text style={styles.text} />
+            <Text style={styles.text} />
+            <TouchableOpacity onPress={()=>navigateToSetOfQuestions()}>
+                <Field text={'NAUKA'}/>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={()=>navigateToExam()}>
+                <Field text={'EGZAMIN'}/>
+            </TouchableOpacity>
+        </View>);
 }
 
 const styles = StyleSheet.create({

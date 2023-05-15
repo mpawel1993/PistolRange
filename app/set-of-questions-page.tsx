@@ -6,50 +6,53 @@ const SetOfQuestionsPage = ({navigation}) => {
 
     const baseQuestions: Question[] = JSON.parse(JSON.stringify(require('../assets/questionList.json')));
 
-    function handleNavigateToAll() {
-        navigation.navigate('LearningPage', {questions: baseQuestions});
+    let categories = ['Wszystkie' ,'Ustawa o Broni i Amunicji','Przechowywanie i noszenie Broni',
+        'Przewożenie broni środkami transportu publicznego', 'Bezpieczenstwo na strzelnicach','Sankcje Karne',
+        'Obrona Konieczna i Stan Wyższej Konieczności']
+    function handleNavigateToAll(categoryName) {
+        navigation.navigate('LearningPage', {questions: baseQuestions, categoryName:categoryName});
     }
 
-    function handleNavigateToActOfGunAndAmmo() {
+    function handleNavigateToActOfGunAndAmmo(categoryName) {
         let set1 = baseQuestions.filter(x => x.id > 0 && x.id <= 145);
         let set2 = baseQuestions.filter(x => x.id >= 154 && x.id <= 158);
         let set3 = baseQuestions.filter(x => x.id >= 164 && x.id <= 169);
         let actual = [...set1, ...set2, ...set3];
         assignId(actual);
-        navigation.navigate('LearningPage', {questions: actual});
+        navigation.navigate('LearningPage', {questions: actual, categoryName:categoryName});
     }
 
-    const handleNavigationToCarryGun = () => {
+    const handleNavigationToCarryGun = (categoryName) => {
         let actual = baseQuestions.filter(x => x.id >= 146 && x.id <= 153);
         assignId(actual);
-        navigation.navigate('LearningPage', {questions: actual});
+        navigation.navigate('LearningPage', {questions: actual, categoryName:categoryName});
     }
 
-    const handleNavigationToPublicTransport = () => {
+    const handleNavigationToPublicTransport = (categoryName) => {
         let actual = baseQuestions.filter(x => x.id >= 159 && x.id <= 163);
         assignId(actual);
-        navigation.navigate('LearningPage', {questions: actual});
+        navigation.navigate('LearningPage', {questions: actual, categoryName:categoryName});
     }
 
-    const handleNavigationToSafetyOnShootingRange = () => {
+    const handleNavigationToSafetyOnShootingRange = (categoryName) => {
         let actual = baseQuestions.filter(x => x.id >= 170 && x.id <= 184);
         assignId(actual);
-        navigation.navigate('LearningPage', {questions: actual});
+        navigation.navigate('LearningPage', {questions: actual, categoryName:categoryName});
     }
 
-    const handleNavigationToCriminalSanctions = () => {
+    const handleNavigationToCriminalSanctions = (categoryName) => {
         let set1 = baseQuestions.filter(x => x.id >= 185 && x.id <= 193);
         let set2 = baseQuestions.filter(x => x.id >= 197 && x.id <= 200);
         let actual = [];
         actual = [...set1, ...set2];
         assignId(actual);
-        navigation.navigate('LearningPage', {questions: actual});
+        navigation.navigate('LearningPage', {questions: actual, categoryName:categoryName});
     }
 
-    const handleNavigationToSelfDefence = () => {
+    const handleNavigationToSelfDefence = (categoryName) => {
         let actual = baseQuestions.filter(x => x.id >= 194 && x.id <= 196);
         assignId(actual)
-        navigation.navigate('LearningPage', {questions: actual});
+        navigation.navigate('LearningPage', {questions: actual, categoryName:categoryName});
     }
 
     const assignId = (array: any[]) => {
@@ -60,27 +63,34 @@ const SetOfQuestionsPage = ({navigation}) => {
         });
     }
 
+    const navigateToActivityPage = () => {
+        navigation.navigate('ActivityPage');
+    }
+
     return (<View style={styles.container}>
-        <TouchableOpacity onPress={() => handleNavigateToAll()}>
-            <Field text={'Wszystkie'}/>
+        <TouchableOpacity onPress={() => handleNavigateToAll(categories[0])}>
+            <Field text={categories[0]}/>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => handleNavigateToActOfGunAndAmmo()}>
-            <Field text={'Ustawa o Broni i Amunicji'}/>
+        <TouchableOpacity onPress={() => handleNavigateToActOfGunAndAmmo(categories[1])}>
+            <Field text={categories[1]}/>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => handleNavigationToCarryGun()}>
-            <Field text={'Przechowywanie i noszenie Broni'}/>
+        <TouchableOpacity onPress={() => handleNavigationToCarryGun(categories[2])}>
+            <Field text={categories[2]}/>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => handleNavigationToPublicTransport()}>
-            <Field text={'Przewożenie broni środkami transportu publicznego'}/>
+        <TouchableOpacity onPress={() => handleNavigationToPublicTransport(categories[3])}>
+            <Field text={categories[3]}/>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => handleNavigationToSafetyOnShootingRange()}>
-            <Field text={'Bezpieczenstwo na strzelnicach'}/>
+        <TouchableOpacity onPress={() => handleNavigationToSafetyOnShootingRange(categories[4])}>
+            <Field text={categories[4]}/>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => handleNavigationToCriminalSanctions()}>
-            <Field text={'Sankcje Karne Pytania'}/>
+        <TouchableOpacity onPress={() => handleNavigationToCriminalSanctions(categories[5])}>
+            <Field text={categories[5]}/>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => handleNavigationToSelfDefence()}>
-            <Field text={'Obrona Konieczna i Stan Wyższej Konieczności'}/>
+        <TouchableOpacity onPress={() => handleNavigationToSelfDefence(categories[6])}>
+            <Field text={categories[6]}/>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={()=>navigateToActivityPage()}>
+            <Field text={'WSTECZ'}/>
         </TouchableOpacity>
     </View>)
 }

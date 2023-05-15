@@ -3,11 +3,14 @@ import AnswerField from "./answer-field";
 import NavigationField from "./navigation-field";
 import {PossibleAnswer, Question} from "../model/model";
 import {useEffect, useState} from "react";
+import Header from "./header";
+import EndOfModuleModal from "./end-of-module-modal";
 
 const LearningPage = ({navigation}) => {
     let isQuestionsLoaded = false;
 
     const [params, setParams] = useState(navigation.state);
+    const [category, setCategory] = useState('');
 
     const [questions, setQuestions] = useState([] as Question[]); //Filtered questions list
     const [actualQuestion, setActualQuestion] = useState({//Actual Loaded Questions
@@ -28,6 +31,7 @@ const LearningPage = ({navigation}) => {
             a.possibleAnswer.map(b => b.gradient = ['#94c02b', '#71912a']);
         });
         setQuestions(que);
+        setCategory(params.params.categoryName)
     }, [params]);
 
     useEffect(() => {
@@ -130,9 +134,14 @@ const LearningPage = ({navigation}) => {
     }
 
     return (<View style={styles.container}>
-        <Text style={styles.header}>Nauka</Text>
+        <Header/>
         <View>
-            <Text style={styles.text}>{actualQuestion.id}/{questions.length}. {actualQuestion.value}</Text>
+            <Text style={styles.header}>NAUKA({actualQuestion.id}/{questions.length})</Text>
+            <Text style={styles.text}>{category}</Text>
+        </View>
+
+        <View>
+            <Text style={styles.text}>{actualQuestion.value}</Text>
         </View>
 
         <TouchableOpacity disabled={actualQuestion.isButtonsDisabled} onPress={() => handlePickUp('a')}>
@@ -166,7 +175,6 @@ const LearningPage = ({navigation}) => {
                 <NavigationField text={'NASTĘPNE'}/>
             </TouchableOpacity>
         </View>
-
     </View>)
 }
 

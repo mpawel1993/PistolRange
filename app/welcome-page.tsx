@@ -4,7 +4,7 @@ import {useEffect} from "react";
 const WelcomePage = ({ navigation }) => {
 
     const navigateToStartPage = () => {
-        navigation.navigate('StartPage');
+        navigation.navigate('ActivityPage');
     }
 
     useEffect(() => {
@@ -16,8 +16,6 @@ const WelcomePage = ({ navigation }) => {
 
     return (<View style={styles.container}>
         <Image source={require('../assets/welcome-page-logo.png')} style={styles.button}/>
-        {/*<TouchableOpacity onPress={() => navigateToStartPage()}>*/}
-        {/*</TouchableOpacity>*/}
     </View>)
 }
 
