@@ -2,13 +2,15 @@ import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import AnswerField from "./answer-field";
 import NavigationField from "./navigation-field";
 import {PossibleAnswer, Question} from "../model/model";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
+import EndOfModuleModal from "./end-of-module-modal";
+import ExamSummary from "./exam-summary";
 
 const ExamPage = ({navigation}) => {
+    const [time, setTime] = useState(1800|| 10);
+    const timerRef = useRef(time);
     let isQuestionsLoaded = false;
-
     const [params, setParams] = useState(navigation.state);
-
     const [questions, setQuestions] = useState([] as Question[]); //Filtered questions list
     const [actualQuestion, setActualQuestion] = useState({//Actual Loaded Questions
         id:1,
@@ -19,8 +21,7 @@ const ExamPage = ({navigation}) => {
     } as Question);
     const [nextButtonDisabled, setNextButtonDisabled] = useState(false);
     const [previousDisabled, setPreviousButtonDisabled] = useState(false);
-    const [isModuleFinished, setIsModuleFinished] = useState(false);
-
+    const [isSummaryVisible, setIsSummaryVisible] = useState(false);
     const [finalInfo, setFinalInfo] = useState('');
 
     //After Component Mount
@@ -60,8 +61,25 @@ const ExamPage = ({navigation}) => {
         }
     }, [actualQuestion]);
 
+    useEffect(() => {
+        const timerId = setInterval(() => {
+            timerRef.current -= 1;
+            if (timerRef.current < 0) {
+                console.log('Egzamin nie udany')
+                clearInterval(timerId);
+            } else {
+                console.log('Egzamin trwa')
+                setTime(timerRef.current);
+            }
+        }, 1000);
+        return () => {
+            clearInterval(timerId);
+        };
+    }, []);
+
     const handleQuit = () => {
-        navigation.navigate('ActivityPage');
+        summaryExam();
+        setIsSummaryVisible(true);
     }
 
     const handlePickUp = (option) => {
@@ -125,15 +143,15 @@ const ExamPage = ({navigation}) => {
                 }
             }
         });
-        setIsModuleFinished(true);
         let er = goodAnswers == 10 ? 'ZALICZONY' : 'NIEZALICZONY';
-
         setFinalInfo(`Dobrze: ${goodAnswers} , Zle ${badAnswers}, Rezultat: ${er}` )
-
     }
 
     return (<View style={styles.container}>
         <Text style={styles.header}>EGZAMIN</Text>
+        <View>
+            <Text style={styles.text}> Time {time} sec </Text>
+        </View>
         <View>
             <Text style={styles.text}>{actualQuestion.id}/{questions.length}. {actualQuestion.value}</Text>
         </View>
@@ -154,10 +172,6 @@ const ExamPage = ({navigation}) => {
                          possibleAnswer={actualQuestion.possibleAnswer.filter(x => x.id === 'c')[0].value}/>
         </TouchableOpacity>
 
-        <View>
-            {isModuleFinished ? <Text style={styles.text}>{finalInfo}</Text> : ''}
-        </View>
-
         <View style={{flexDirection: 'row', paddingTop: 15}}>
             <TouchableOpacity disabled={previousDisabled} onPress={() => handlePreviousQuestion()}>
                 <NavigationField text={'POPRZEDNIE'}/>
@@ -168,9 +182,7 @@ const ExamPage = ({navigation}) => {
             <TouchableOpacity disabled={nextButtonDisabled} onPress={() => handleNextQuestion()}>
                 <NavigationField text={'NASTĘPNE'}/>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => summaryExam()}>
-                <NavigationField text={'SUMMARY'}/>
-            </TouchableOpacity>
+            <ExamSummary isModalVisible={isSummaryVisible} finalInfo={finalInfo} navigation={navigation}/>
         </View>
 
     </View>)

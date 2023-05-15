@@ -1,9 +1,17 @@
-import {useState} from "react";
-import {Pressable, View, Modal, Text, Alert, StyleSheet, TouchableOpacity} from "react-native";
+import {useEffect, useState} from "react";
+import {Pressable, View, Modal,Image, Text, Alert, StyleSheet, TouchableOpacity} from "react-native";
 import NavigationField from "./navigation-field";
 
-const EndOfModuleModal = () =>{
-    const [modalVisible, setModalVisible] = useState(true);
+const EndOfModuleModal = ({isModalVisible}) =>{
+    const [modalVisible, setModalVisible] = useState(false);
+
+    useEffect(() => {
+        setModalVisible(isModalVisible);
+    },[isModalVisible]);
+
+    const closeModal = () => {
+        return setModalVisible(false);
+    }
 
     return (
         <View>
@@ -18,17 +26,20 @@ const EndOfModuleModal = () =>{
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
                         <Text style={styles.modalText}>Brawo ukończyłeś moduł</Text>
-                        <TouchableOpacity>
+                        <Image style={styles.video}
+                            source={require('../assets/tmp.png')}
+                        />
+                        <TouchableOpacity onPress={() => closeModal()}>
                             <NavigationField text={'Zamknij'}/>
                         </TouchableOpacity>
                     </View>
                 </View>
             </Modal>
-            <Pressable
-                style={[styles.button, styles.buttonOpen]}
-                onPress={() => setModalVisible(true)}>
-                <Text style={styles.textStyle}>Show Modal</Text>
-            </Pressable>
+            {/*<Pressable*/}
+            {/*    style={[styles.button, styles.buttonOpen]}*/}
+            {/*    onPress={() => setModalVisible(true)}>*/}
+            {/*    <Text style={styles.textStyle}>Show Modal</Text>*/}
+            {/*</Pressable>*/}
         </View>
     );
 
@@ -84,6 +95,10 @@ const styles = StyleSheet.create({
         alignItems: "stretch",
         bottom: 0,
         right: 0
+    },
+    video:{
+        width:300,
+        height:300
     }
 });
 

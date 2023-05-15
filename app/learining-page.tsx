@@ -11,6 +11,7 @@ const LearningPage = ({navigation}) => {
 
     const [params, setParams] = useState(navigation.state);
     const [category, setCategory] = useState('');
+    const [isSummaryVisible, setIsSummaryVisible] = useState(false);
 
     const [questions, setQuestions] = useState([] as Question[]); //Filtered questions list
     const [actualQuestion, setActualQuestion] = useState({//Actual Loaded Questions
@@ -22,7 +23,6 @@ const LearningPage = ({navigation}) => {
     } as Question);
     const [nextButtonDisabled, setNextButtonDisabled] = useState(false);
     const [previousDisabled, setPreviousButtonDisabled] = useState(false);
-    const [isModuleFinished, setIsModuleFinished] = useState(false);
 
     //After Component Mount
     useEffect(() => {
@@ -86,7 +86,7 @@ const LearningPage = ({navigation}) => {
             if (next === undefined) {
                 if (question.actualAnswer === question.goodAnswer) {
                     question.possibleAnswer.filter(x => x.id == question.actualAnswer)[0].gradient = ['orange', 'orange'];
-                    setIsModuleFinished(true);
+                    setIsSummaryVisible(true);
                     questions[question.id - 1].isButtonsDisabled = true
                     setQuestions(questions);
                 } else {
@@ -160,10 +160,6 @@ const LearningPage = ({navigation}) => {
                          possibleAnswer={actualQuestion.possibleAnswer.filter(x => x.id === 'c')[0].value}/>
         </TouchableOpacity>
 
-        <View>
-            {isModuleFinished ? <Text style={styles.text}>Brawo, ukonczyles modul</Text> : ''}
-        </View>
-
         <View style={{flexDirection: 'row', paddingTop: 15}}>
             <TouchableOpacity disabled={previousDisabled} onPress={() => handlePreviousQuestion()}>
                 <NavigationField text={'POPRZEDNIE'}/>
@@ -175,6 +171,7 @@ const LearningPage = ({navigation}) => {
                 <NavigationField text={'NASTĘPNE'}/>
             </TouchableOpacity>
         </View>
+        <EndOfModuleModal isModalVisible={isSummaryVisible} />
     </View>)
 }
 
