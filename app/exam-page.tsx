@@ -5,6 +5,7 @@ import {PossibleAnswer, Question} from "../model/model";
 import {useEffect, useRef, useState} from "react";
 import EndOfModuleModal from "./end-of-module-modal";
 import ExamSummary from "./exam-summary";
+import ExamTime from "./exam-timer";
 
 const ExamPage = ({navigation}) => {
     const [time, setTime] = useState(1800|| 10);
@@ -150,6 +151,7 @@ const ExamPage = ({navigation}) => {
     return (<View style={styles.container}>
         <Text style={styles.header}>EGZAMIN</Text>
         <View>
+            <ExamTime></ExamTime>
             <Text style={styles.text}> Time {time} sec </Text>
         </View>
         <View>
