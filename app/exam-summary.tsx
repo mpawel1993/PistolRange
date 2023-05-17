@@ -46,7 +46,7 @@ const ExamSummary = ({isModalVisible , finalInfo, navigation , passed}) => {
         </Modal>
         {/*<Pressable*/}
         {/*    style={[styles.button, styles.buttonOpen]}*/}
-        {/*    onPress={() => setModalVisible(true)}>*/}
+        {/*    onPress={() => setModalVisible(true)}>*/}ū
         {/*    <Text style={styles.textStyle}>Show Modal</Text>*/}
         {/*</Pressable>*/}
     </View>)
