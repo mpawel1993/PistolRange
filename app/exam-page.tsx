@@ -3,12 +3,11 @@ import AnswerField from "./answer-field";
 import NavigationField from "./navigation-field";
 import {PossibleAnswer, Question} from "../model/model";
 import {useEffect, useRef, useState} from "react";
-import EndOfModuleModal from "./end-of-module-modal";
 import ExamSummary from "./exam-summary";
-import ExamTime from "./exam-timer";
 
 const ExamPage = ({navigation}) => {
     const [time, setTime] = useState(1800|| 10);
+    const [formattedTime, setFormattedTime] = useState('30min: 0 sec');
     const timerRef = useRef(time);
     let isQuestionsLoaded = false;
     const [params, setParams] = useState(navigation.state);
@@ -24,6 +23,7 @@ const ExamPage = ({navigation}) => {
     const [previousDisabled, setPreviousButtonDisabled] = useState(false);
     const [isSummaryVisible, setIsSummaryVisible] = useState(false);
     const [finalInfo, setFinalInfo] = useState('');
+    const [isExamPassed, setIsExamPassed] = useState(false);
 
     //After Component Mount
     useEffect(() => {
@@ -66,17 +66,25 @@ const ExamPage = ({navigation}) => {
         const timerId = setInterval(() => {
             timerRef.current -= 1;
             if (timerRef.current < 0) {
-                console.log('Egzamin nie udany')
                 clearInterval(timerId);
             } else {
-                console.log('Egzamin trwa')
                 setTime(timerRef.current);
+                setFormattedTime(secondsToHms(timerRef.current));
             }
         }, 1000);
         return () => {
             clearInterval(timerId);
         };
     }, []);
+
+    function secondsToHms(d) {
+        d = Number(d);
+        var m = Math.floor(d % 3600 / 60);
+        var s = Math.floor(d % 3600 % 60);
+        var mDisplay = m > 0 ? m + (m == 1 ? " min : " : " min : ") : "";
+        var sDisplay = s > 0 ? s + (s == 1 ? " s" : " s") : "";
+        return mDisplay + sDisplay;
+    }
 
     const handleQuit = () => {
         summaryExam();
@@ -145,17 +153,18 @@ const ExamPage = ({navigation}) => {
             }
         });
         let er = goodAnswers == 10 ? 'ZALICZONY' : 'NIEZALICZONY';
-        setFinalInfo(`Dobrze: ${goodAnswers} , Zle ${badAnswers}, Rezultat: ${er}` )
+        goodAnswers == 10 ? setIsExamPassed(true) : setIsExamPassed(false);
+
+        setFinalInfo(`Dobrze: ${goodAnswers} , Zle ${10 - goodAnswers}, Rezultat: ${er}` )
     }
 
     return (<View style={styles.container}>
-        <Text style={styles.header}>EGZAMIN</Text>
+        <Text style={styles.header}>EGZAMIN({actualQuestion.id}/{questions.length})</Text>
         <View>
-            <ExamTime></ExamTime>
-            <Text style={styles.text}> Time {time} sec </Text>
+            <Text style={styles.text}>{formattedTime}</Text>
         </View>
         <View>
-            <Text style={styles.text}>{actualQuestion.id}/{questions.length}. {actualQuestion.value}</Text>
+            <Text style={styles.text}> {actualQuestion.value}</Text>
         </View>
 
         <TouchableOpacity disabled={actualQuestion.isButtonsDisabled} onPress={() => handlePickUp('a')}>
@@ -184,7 +193,7 @@ const ExamPage = ({navigation}) => {
             <TouchableOpacity disabled={nextButtonDisabled} onPress={() => handleNextQuestion()}>
                 <NavigationField text={'NASTĘPNE'}/>
             </TouchableOpacity>
-            <ExamSummary isModalVisible={isSummaryVisible} finalInfo={finalInfo} navigation={navigation}/>
+            <ExamSummary isModalVisible={isSummaryVisible} finalInfo={finalInfo} navigation={navigation} passed={isExamPassed}/>
         </View>
 
     </View>)

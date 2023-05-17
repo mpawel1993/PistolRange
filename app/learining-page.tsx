@@ -5,6 +5,9 @@ import {PossibleAnswer, Question} from "../model/model";
 import {useEffect, useState} from "react";
 import Header from "./header";
 import EndOfModuleModal from "./end-of-module-modal";
+import FromBeginningModal from "./from-begining-modal";
+import Field from "./field";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const LearningPage = ({navigation}) => {
     let isQuestionsLoaded = false;
@@ -12,6 +15,7 @@ const LearningPage = ({navigation}) => {
     const [params, setParams] = useState(navigation.state);
     const [category, setCategory] = useState('');
     const [isSummaryVisible, setIsSummaryVisible] = useState(false);
+    const [isFromBeginningVisible, setIsFromBeginningVisible] = useState(true);
 
     const [questions, setQuestions] = useState([] as Question[]); //Filtered questions list
     const [actualQuestion, setActualQuestion] = useState({//Actual Loaded Questions
@@ -33,6 +37,18 @@ const LearningPage = ({navigation}) => {
         setQuestions(que);
         setCategory(params.params.categoryName)
     }, [params]);
+
+
+    const storeData = async () => {
+        try {
+            await AsyncStorage.setItem(
+                '@MySuperStore:key',
+                'I like to save it.',
+            );
+        } catch (error) {
+           console.error(error);
+        }
+    };
 
     useEffect(() => {
         if (questions.length !== 0 && !isQuestionsLoaded) {
@@ -144,6 +160,7 @@ const LearningPage = ({navigation}) => {
             <Text style={styles.text}>{actualQuestion.value}</Text>
         </View>
 
+
         <TouchableOpacity disabled={actualQuestion.isButtonsDisabled} onPress={() => handlePickUp('a')}>
             <AnswerField gradientColours={actualQuestion.possibleAnswer.filter(x => x.id === 'a')[0].gradient}
                          option={actualQuestion.possibleAnswer.filter(x => x.id === 'a')[0].id}
@@ -172,6 +189,7 @@ const LearningPage = ({navigation}) => {
             </TouchableOpacity>
         </View>
         <EndOfModuleModal isModalVisible={isSummaryVisible} />
+        <FromBeginningModal isModalVisible={isFromBeginningVisible}/>
     </View>)
 }
 

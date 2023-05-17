@@ -1,19 +1,14 @@
 import {Alert, Image, Modal, StyleSheet, Text, TouchableOpacity, View} from "react-native";
-import NavigationField from "./navigation-field";
 import {useEffect, useState} from "react";
+import Field from "./field";
+import NavigationField from "./navigation-field";
 
-const ExamSummary = ({isModalVisible , finalInfo, navigation , passed}) => {
+const FromBeginningModal = ({isModalVisible}) => {
 
     const [modalVisible, setModalVisible] = useState(false);
     useEffect(() => {
         setModalVisible(isModalVisible);
     },[isModalVisible]);
-
-
-    const closeExam = () => {
-        setModalVisible(false);
-        navigation.navigate('ActivityPage');
-    }
 
     const closeModal = () => {
         setModalVisible(false);
@@ -30,25 +25,17 @@ const ExamSummary = ({isModalVisible , finalInfo, navigation , passed}) => {
             }}>
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
-                    <Text style={styles.modalText}>Ukończono egzamin</Text>
-                    <Image style={styles.video}
-                           source={passed? require('../assets/passed.gif') : require('../assets/failed.gif')}
-                    />
-                    <Text style={styles.modalText}>{finalInfo}</Text>
+                    <Text style={styles.modalText}>Od początku?</Text>
+                    <Text style={styles.modalText}>Narazie nie dziala</Text>
                     <TouchableOpacity onPress={() => closeModal()}>
-                        <NavigationField text={'Przeglądaj'}/>
+                        <Field text={'tak'}/>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => closeExam()}>
-                        <NavigationField text={'Zamknij'}/>
+                    <TouchableOpacity onPress={() => closeModal()}>
+                        <Field text={'nie'}/>
                     </TouchableOpacity>
                 </View>
             </View>
         </Modal>
-        {/*<Pressable*/}
-        {/*    style={[styles.button, styles.buttonOpen]}*/}
-        {/*    onPress={() => setModalVisible(true)}>*/}
-        {/*    <Text style={styles.textStyle}>Show Modal</Text>*/}
-        {/*</Pressable>*/}
     </View>)
 }
 
@@ -112,4 +99,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default ExamSummary;
+export default FromBeginningModal;
