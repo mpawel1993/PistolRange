@@ -3,15 +3,22 @@ import {useEffect, useState} from "react";
 import Field from "./field";
 import NavigationField from "./navigation-field";
 
-const FromBeginningModal = ({isModalVisible}) => {
+const FromBeginningModal = ({isModalVisible, userResponse}) => {
 
     const [modalVisible, setModalVisible] = useState(false);
+
     useEffect(() => {
         setModalVisible(isModalVisible);
     },[isModalVisible]);
 
-    const closeModal = () => {
+    const pickYes = () => {
         setModalVisible(false);
+        userResponse('yes');
+    }
+
+    const pickNo = () => {
+        setModalVisible(false);
+        userResponse('no');
     }
 
     return ( <View>
@@ -27,10 +34,10 @@ const FromBeginningModal = ({isModalVisible}) => {
                 <View style={styles.modalView}>
                     <Text style={styles.modalText}>Od początku?</Text>
                     <Text style={styles.modalText}>Narazie nie dziala</Text>
-                    <TouchableOpacity onPress={() => closeModal()}>
+                    <TouchableOpacity onPress={() => pickYes()}>
                         <Field text={'tak'}/>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => closeModal()}>
+                    <TouchableOpacity onPress={() => pickNo()}>
                         <Field text={'nie'}/>
                     </TouchableOpacity>
                 </View>

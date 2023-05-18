@@ -136,7 +136,6 @@ const ExamPage = ({navigation}) => {
 
     const summaryExam = () =>{
         let goodAnswers = 0;
-        let badAnswers = 0;
 
         questions.forEach(question => {
             question.isButtonsDisabled = true;
@@ -147,11 +146,12 @@ const ExamPage = ({navigation}) => {
                     setQuestions(questions);
                 } else {
                     question.possibleAnswer.filter(x => x.id == question.actualAnswer)[0].gradient = ['red', 'red'];
-                    badAnswers++;
+                    question.possibleAnswer.filter(x => x.id == question.goodAnswer )[0].gradient = ['green', 'green'];
                     setActualQuestion({...actualQuestion, question});
                 }
             }
         });
+
         let er = goodAnswers == 10 ? 'ZALICZONY' : 'NIEZALICZONY';
         goodAnswers == 10 ? setIsExamPassed(true) : setIsExamPassed(false);
 
@@ -213,8 +213,6 @@ const styles = StyleSheet.create({
         width:300,
         height:100,
         resizeMode: 'contain'
-    },question:{
-        backgroundColor:'red'
     },header:{
         fontSize:30,
         color:'#98c135'

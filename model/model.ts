@@ -13,3 +13,8 @@ export interface PossibleAnswer {
     value: string;
     gradient: any;
 }
+
+export interface StorageObject {
+    questions: Question[];
+    actualQuestion:Question;
+}
