@@ -1,6 +1,7 @@
 import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import Field from "./field";
 import {Question} from "../model/model";
+import {LinearGradient} from "expo-linear-gradient";
 
 const SetOfQuestionsPage = ({navigation}) => {
 
@@ -75,10 +76,10 @@ const SetOfQuestionsPage = ({navigation}) => {
         navigation.navigate('ActivityPage');
     }
 
+    let back = '<-';
+
     return (<View style={styles.container}>
-        <TouchableOpacity onPress={() => handleNavigateToAll(categories[0])}>
-            <Field text={categories[0]}/>
-        </TouchableOpacity>
+        <Image source={require('../assets/learning_image.png')} style={styles.button}/>
         <TouchableOpacity onPress={() => handleNavigateToActOfGunAndAmmo(categories[1])}>
             <Field text={categories[1]}/>
         </TouchableOpacity>
@@ -97,9 +98,16 @@ const SetOfQuestionsPage = ({navigation}) => {
         <TouchableOpacity onPress={() => handleNavigationToSelfDefence(categories[6])}>
             <Field text={categories[6]}/>
         </TouchableOpacity>
-        <TouchableOpacity onPress={()=>navigateToActivityPage()}>
-            <Field text={'WSTECZ'}/>
-        </TouchableOpacity>
+        <View style={styles.back}>
+            <TouchableOpacity onPress={()=>navigateToActivityPage()}>
+                <LinearGradient style={styles.gradient} colors={['#94c02b', '#71912a']}>
+                    <Text style={styles.text}>{back}</Text>
+                </LinearGradient>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => handleNavigateToAll(categories[0])}>
+                <Field text={categories[0]}/>
+            </TouchableOpacity>
+        </View>
     </View>)
 }
 
@@ -116,6 +124,16 @@ const styles = StyleSheet.create({
         width:300,
         height:50,
         resizeMode: 'contain'
+    },back:{
+        flexDirection:'row'
+    },gradient:{
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor:'#94c02b',
+        width: 60,
+        paddingTop:20,
+        paddingBottom:20,
+        fontWeight:'bold'
     }
 });
 

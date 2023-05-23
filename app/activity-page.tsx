@@ -1,4 +1,4 @@
-import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import Field from "./field";
 import {Question} from "../model/model";
 import React from "react";
@@ -46,18 +46,14 @@ const ActivityPage = ({ navigation }) =>{
 
     return(
         <View style={styles.container}>
-            <Text style={styles.text} >Witaj w darmowej aplikacji</Text>
-            <Text style={styles.text} >która pomoże ci przygotować się</Text>
-            <Text style={styles.text} >do egzaminu teoretycznego</Text>
-            <Text style={styles.text} />
-            <Text style={styles.text} />
-            <Text style={styles.text} />
+            <Image source={require('../assets/ward.png')} style={styles.word}/>
             <TouchableOpacity onPress={()=>navigateToSetOfQuestions()}>
                 <Field text={'NAUKA'}/>
             </TouchableOpacity>
             <TouchableOpacity onPress={()=>navigateToExam()}>
                 <Field text={'EGZAMIN'}/>
             </TouchableOpacity>
+            <Image source={require('../assets/baner.png')} style={styles.button}/>
         </View>);
 }
 
@@ -66,12 +62,16 @@ const styles = StyleSheet.create({
         flex:1,
         justifyContent: 'center',
         alignItems: 'center',
-        borderWidth: 1,
     },text:{
         fontSize:20,
         color:'white'
     },button:{
+        width:350,
+        height: 250,
+        resizeMode: 'contain'
+    },word:{
         width:300,
+        height: 300,
         resizeMode: 'contain'
     }
 });

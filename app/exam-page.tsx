@@ -145,11 +145,10 @@ const ExamPage = ({navigation}) => {
             if(question.actualAnswer !== undefined){
                 if (question.actualAnswer === question.goodAnswer) {
                     question.possibleAnswer.filter(x => x.id == question.actualAnswer)[0].gradient = ['green', 'green'];
+                    setActualQuestion({...actualQuestion, question});
                     goodAnswers++;
-                    setQuestions(questions);
                 } else {
                     question.possibleAnswer.filter(x => x.id == question.actualAnswer)[0].gradient = ['red', 'red'];
-                    question.possibleAnswer.filter(x => x.id == question.goodAnswer )[0].gradient = ['green', 'green'];
                     setActualQuestion({...actualQuestion, question});
                 }
             }

@@ -1,15 +1,10 @@
-import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import AnswerField from "./answer-field";
 import NavigationField from "./navigation-field";
 import {PossibleAnswer, Question, StorageObject} from "../model/model";
 import {SetStateAction, useEffect, useState} from "react";
 import Header from "./header";
 import EndOfModuleModal from "./end-of-module-modal";
-import FromBeginningModal from "./from-begining-modal";
-import Field from "./field";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import {time} from "expo-updates/build-cli/utils/log";
-
 const LearningPage = ({navigation}) => {
     let isQuestionsLoaded = false;
 
@@ -141,8 +136,9 @@ const LearningPage = ({navigation}) => {
     return (<View style={styles.container}>
         <Header/>
         <View>
-            <Text style={styles.header}>NAUKA({actualQuestion.id}/{questions.length})</Text>
-            <Text style={styles.text}>{category}</Text>
+            <ImageBackground source={require('../assets/learning_logo.png')} resizeMode="cover" style={styles.learningLogo}>
+                <Text style={styles.text}>{category}</Text>
+            </ImageBackground>
         </View>
 
         <View>
@@ -200,6 +196,8 @@ const styles = StyleSheet.create({
     },header:{
         fontSize:30,
         color:'#98c135'
+    },learningLogo:{
+        width:300
     }
 });
 
