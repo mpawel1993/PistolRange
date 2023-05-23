@@ -19,17 +19,14 @@ const styles = StyleSheet.create({
     gradient:{
         justifyContent: 'center',
         alignItems: 'center',
-        borderWidth: 1,
         backgroundColor:'#94c02b',
-        borderColor:'#fefefe',
-        borderRadius:10,
         width: 300,
         paddingTop:20,
         paddingBottom:20,
         fontWeight:'bold'
     },text:{
         fontSize:20,
-        color:'#2b2a29',
+        color:'#2b2a29'
     }
 });
 

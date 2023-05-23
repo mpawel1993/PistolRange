@@ -24,8 +24,8 @@ const ExamPage = ({navigation}) => {
     const [isSummaryVisible, setIsSummaryVisible] = useState(false);
     const [finalInfo, setFinalInfo] = useState('');
     const [isExamPassed, setIsExamPassed] = useState(false);
+    const [wasSummaryDisplayed, setWasSummaryDisplayed] = useState(false);
 
-    //After Component Mount
     useEffect(() => {
         let que = params.params.questions.map(x => Object.assign({}, x));
         que.map(a => {
@@ -71,6 +71,9 @@ const ExamPage = ({navigation}) => {
                 setTime(timerRef.current);
                 setFormattedTime(secondsToHms(timerRef.current));
             }
+            if(time < 0){
+                summaryExam();
+            }
         }, 1000);
         return () => {
             clearInterval(timerId);
@@ -89,6 +92,10 @@ const ExamPage = ({navigation}) => {
     const handleQuit = () => {
         summaryExam();
         setIsSummaryVisible(true);
+        setWasSummaryDisplayed(true);
+        if(wasSummaryDisplayed == true){
+            navigation.navigate('ActivityPage');
+        }
     }
 
     const handlePickUp = (option) => {
@@ -108,29 +115,25 @@ const ExamPage = ({navigation}) => {
             let nextId = JSON.parse(JSON.stringify(question.id));
             nextId++;
             let next = questions.filter(x => x.id == nextId)[0]
-
             if (nextId === questions.length) {
                 setNextButtonDisabled(true);
             } else {
                 setPreviousButtonDisabled(false);
             }
-
             setActualQuestion(next);
         }
     }
 
     const handlePreviousQuestion = () => {
-        const id = actualQuestion.id;
-        let prevId = JSON.parse(JSON.stringify(id));
+        const question = JSON.parse(JSON.stringify(actualQuestion));
+        let prevId = JSON.parse(JSON.stringify(question.id));
         prevId--;
         let previous = questions.filter(x => x.id == prevId)[0]
-
-        if (id === questions.length) {
+        if (prevId === questions.length) {
             setNextButtonDisabled(true);
         } else {
             setPreviousButtonDisabled(false);
         }
-
         setActualQuestion(previous);
     }
 

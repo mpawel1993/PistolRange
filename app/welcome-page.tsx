@@ -15,7 +15,7 @@ const WelcomePage = ({ navigation }) => {
 
 
     return (<View style={styles.container}>
-        <Image source={require('../assets/welcome-page-logo.png')} style={styles.button}/>
+        <Image source={require('../assets/welcome_logo.png')} style={styles.button}/>
     </View>)
 }
 
