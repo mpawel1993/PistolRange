@@ -106,11 +106,12 @@ const ExamPage = ({navigation}) => {
         question.possibleAnswer.filter(x => x.id == option)[0].gradient = ['yellow', 'yellow'];
         question.actualAnswer = option;
         setActualQuestion({...actualQuestion, question});
+        questions[actualQuestion.id - 1].actualAnswer = option;
+        setQuestions(questions);
     }
 
     const handleNextQuestion = () => {
         let question = actualQuestion;
-
         if (actualQuestion.actualAnswer !== undefined) {
             let nextId = JSON.parse(JSON.stringify(question.id));
             nextId++;
@@ -140,7 +141,7 @@ const ExamPage = ({navigation}) => {
     const summaryExam = () =>{
         let goodAnswers = 0;
 
-        questions.forEach(question => {
+        questions.map(question => {
             question.isButtonsDisabled = true;
             if(question.actualAnswer !== undefined){
                 if (question.actualAnswer === question.goodAnswer) {
@@ -149,6 +150,7 @@ const ExamPage = ({navigation}) => {
                     goodAnswers++;
                 } else {
                     question.possibleAnswer.filter(x => x.id == question.actualAnswer)[0].gradient = ['red', 'red'];
+                    question.possibleAnswer.filter(x => x.id == question.goodAnswer)[0].gradient = ['green', 'green'];
                     setActualQuestion({...actualQuestion, question});
                 }
             }
