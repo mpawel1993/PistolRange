@@ -33,7 +33,6 @@ const FromBeginningModal = ({isModalVisible, userResponse}) => {
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
                     <Text style={styles.modalText}>Od początku?</Text>
-                    <Text style={styles.modalText}>Narazie nie dziala</Text>
                     <TouchableOpacity onPress={() => pickYes()}>
                         <Field text={'tak'}/>
                     </TouchableOpacity>
@@ -56,6 +55,8 @@ const styles = StyleSheet.create({
     },
     modalView: {
         margin: 20,
+        borderColor:'white',
+        borderWidth:1,
         backgroundColor: 'black',
         borderRadius: 20,
         padding: 35,

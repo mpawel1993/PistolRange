@@ -15,7 +15,7 @@ const ActivityPage = ({ navigation }) =>{
         let min, max, r, n, p;
         min = 1;
         max = 200;
-        r = 10; // how many numbers you want to extract
+        r = 10;
 
         for (let i = 0; i < r; i++) {
             do {

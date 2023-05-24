@@ -8,8 +8,7 @@ import EndOfModuleModal from "./end-of-module-modal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import FromBeginningModal from "./from-begining-modal";
 const LearningPage = ({navigation}) => {
-    let isQuestionsLoaded = false;
-
+    let [isQuestionsLoaded , setIsQuestionLoaded] = useState(false);
     const [params, setParams] = useState(navigation.state);
     const [category, setCategory] = useState('');
     const [isSummaryVisible, setIsSummaryVisible] = useState(false);
@@ -25,7 +24,7 @@ const LearningPage = ({navigation}) => {
     const [previousDisabled, setPreviousButtonDisabled] = useState(false);
     const [storageKey, setStorageKey] = useState('');
     const [isStorageItemsExist, setIsStorageItemsExist] = useState(false);
-    const [userResponse, setUserResponse] = useState('no');
+    const [userResponse, setUserResponse] = useState('yes');
 
     //After Component Mount
     useEffect(() => {
@@ -35,6 +34,7 @@ const LearningPage = ({navigation}) => {
         });
         setQuestions(que);
         setCategory(params.params.categoryName);
+        setStorageKey(params.params.storageKey);
     }, [params]);
 
     useEffect(() => {
@@ -45,7 +45,13 @@ const LearningPage = ({navigation}) => {
                 });
                 const question = questions.filter(x => x.id == 1)[0];
                 setActualQuestion(question);
-                isQuestionsLoaded = true;
+                setIsQuestionLoaded(true);
+            }else {
+                if(questions.length !== 0){
+                    const question = questions.filter(x => x.actualAnswer == undefined)[0];
+                    setActualQuestion(question);
+                    setIsQuestionLoaded(true);
+                }
             }
     }, [questions]);
 
@@ -77,6 +83,8 @@ const LearningPage = ({navigation}) => {
         question.possibleAnswer.filter(x => x.id == option)[0].gradient = ['yellow', 'yellow'];
         question.actualAnswer = option;
         setActualQuestion({...actualQuestion, question});
+        questions[actualQuestion.id - 1].actualAnswer = option;
+        setQuestions(questions);
     }
 
     const handleNextQuestion = () => {
@@ -104,7 +112,6 @@ const LearningPage = ({navigation}) => {
                     } else {
                         setPreviousButtonDisabled(false);
                     }
-
                     if (question.actualAnswer === question.goodAnswer) {
                         question.possibleAnswer.filter(x => x.id == question.actualAnswer)[0].gradient = ['green', 'green'];
                         questions[id - 1].isButtonsDisabled = true
@@ -127,18 +134,16 @@ const LearningPage = ({navigation}) => {
         let prevId = JSON.parse(JSON.stringify(id));
         prevId--;
         let previous = questions.filter(x => x.id == prevId)[0]
-
         if (id === questions.length) {
             setNextButtonDisabled(true);
         } else {
             setPreviousButtonDisabled(false);
         }
-
         setActualQuestion(previous);
     }
 
     useEffect(() => {
-        if(userResponse === 'yes'){
+        if(userResponse === 'no'){
             readAsyncData();
         }
     }, [userResponse]);
@@ -155,18 +160,8 @@ const LearningPage = ({navigation}) => {
 
     const storeData = async () => {
         if (storageKey != '') {
-            console.log(questions);
             try {
                 let tmpQuestions = JSON.parse(JSON.stringify(questions));
-                tmpQuestions.map(x => {
-                    x.value = '';
-                    x.paragraph = '';
-                    x.goodAnswer = '';
-                    x.possibleAnswer.map(a => {
-                        a.value = '';
-                    })
-                });
-
                 let forSave = {
                     questions: tmpQuestions, actualQuestion: actualQuestion
                 } as StorageObject;
@@ -193,12 +188,7 @@ const LearningPage = ({navigation}) => {
             const item = await AsyncStorage.getItem(storageKey);
             if(item !== null){
                 let parsed = JSON.parse(item) as StorageObject;
-
-                parsed.questions.forEach(a => {
-                    let c = questions.filter(b => b.id == a.id)[0];
-                    console.log('here');
-                })
-
+                setQuestions(parsed.questions);
             }
         } catch (error) {
             console.error(error);
@@ -214,7 +204,7 @@ const LearningPage = ({navigation}) => {
         </View>
 
         <View>
-            <Text style={styles.text}>{actualQuestion.value}</Text>
+            <Text style={styles.text}>{actualQuestion.value} : {actualQuestion.id}</Text>
         </View>
 
         <TouchableOpacity disabled={actualQuestion.isButtonsDisabled} onPress={() => handlePickUp('a')}>
