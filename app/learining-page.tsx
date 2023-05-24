@@ -5,13 +5,14 @@ import {PossibleAnswer, Question, StorageObject} from "../model/model";
 import {SetStateAction, useEffect, useState} from "react";
 import Header from "./header";
 import EndOfModuleModal from "./end-of-module-modal";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import FromBeginningModal from "./from-begining-modal";
 const LearningPage = ({navigation}) => {
     let isQuestionsLoaded = false;
 
     const [params, setParams] = useState(navigation.state);
     const [category, setCategory] = useState('');
     const [isSummaryVisible, setIsSummaryVisible] = useState(false);
-
     const [questions, setQuestions] = useState([] as Question[]); //Filtered questions list
     const [actualQuestion, setActualQuestion] = useState({//Actual Loaded Questions
         id:1,
@@ -22,7 +23,9 @@ const LearningPage = ({navigation}) => {
     } as Question);
     const [nextButtonDisabled, setNextButtonDisabled] = useState(false);
     const [previousDisabled, setPreviousButtonDisabled] = useState(false);
-
+    const [storageKey, setStorageKey] = useState('');
+    const [isStorageItemsExist, setIsStorageItemsExist] = useState(false);
+    const [userResponse, setUserResponse] = useState('no');
 
     //After Component Mount
     useEffect(() => {
@@ -85,7 +88,7 @@ const LearningPage = ({navigation}) => {
             let next = questions.filter(x => x.id == nextId)[0]
             if (next === undefined) {
                 if (question.actualAnswer === question.goodAnswer) {
-                    question.possibleAnswer.filter(x => x.id == question.actualAnswer)[0].gradient = ['orange', 'orange'];
+                    question.possibleAnswer.filter(x => x.id == question.actualAnswer)[0].gradient = ['green', 'green'];
                     setIsSummaryVisible(true);
                     questions[question.id - 1].isButtonsDisabled = true
                     setQuestions(questions);
@@ -103,10 +106,11 @@ const LearningPage = ({navigation}) => {
                     }
 
                     if (question.actualAnswer === question.goodAnswer) {
-                        question.possibleAnswer.filter(x => x.id == question.actualAnswer)[0].gradient = ['orange', 'orange'];
+                        question.possibleAnswer.filter(x => x.id == question.actualAnswer)[0].gradient = ['green', 'green'];
                         questions[id - 1].isButtonsDisabled = true
                         setQuestions(questions);
                         setActualQuestion(next);
+                        storeData();
                     } else {
                         question.possibleAnswer.filter(x => x.id == question.actualAnswer)[0].gradient = ['red', 'red'];
                         setActualQuestion(question);
@@ -133,6 +137,74 @@ const LearningPage = ({navigation}) => {
         setActualQuestion(previous);
     }
 
+    useEffect(() => {
+        if(userResponse === 'yes'){
+            readAsyncData();
+        }
+    }, [userResponse]);
+
+    useEffect(() => {
+        if (storageKey != '') {
+            checkAsyncData();
+        }
+    }, [storageKey]);
+
+    const sendData = (data) => {
+        setUserResponse(data)
+    }
+
+    const storeData = async () => {
+        if (storageKey != '') {
+            console.log(questions);
+            try {
+                let tmpQuestions = JSON.parse(JSON.stringify(questions));
+                tmpQuestions.map(x => {
+                    x.value = '';
+                    x.paragraph = '';
+                    x.goodAnswer = '';
+                    x.possibleAnswer.map(a => {
+                        a.value = '';
+                    })
+                });
+
+                let forSave = {
+                    questions: tmpQuestions, actualQuestion: actualQuestion
+                } as StorageObject;
+                await AsyncStorage.setItem(storageKey, JSON.stringify(forSave));
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    };
+
+    const checkAsyncData = async () => {
+        try {
+            const item = await AsyncStorage.getItem(storageKey);
+            if(item !== null){
+                setIsStorageItemsExist(true);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    const readAsyncData = async () => {
+        try {
+            const item = await AsyncStorage.getItem(storageKey);
+            if(item !== null){
+                let parsed = JSON.parse(item) as StorageObject;
+
+                parsed.questions.forEach(a => {
+                    let c = questions.filter(b => b.id == a.id)[0];
+                    console.log('here');
+                })
+
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     return (<View style={styles.container}>
         <Header/>
         <View>
@@ -144,7 +216,6 @@ const LearningPage = ({navigation}) => {
         <View>
             <Text style={styles.text}>{actualQuestion.value}</Text>
         </View>
-
 
         <TouchableOpacity disabled={actualQuestion.isButtonsDisabled} onPress={() => handlePickUp('a')}>
             <AnswerField gradientColours={actualQuestion.possibleAnswer.filter(x => x.id === 'a')[0].gradient}
@@ -174,6 +245,7 @@ const LearningPage = ({navigation}) => {
             </TouchableOpacity>
         </View>
         <EndOfModuleModal isModalVisible={isSummaryVisible} />
+        <FromBeginningModal isModalVisible={isStorageItemsExist} userResponse = {sendData}/>
     </View>)
 }
 
