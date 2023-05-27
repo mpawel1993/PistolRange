@@ -10,7 +10,10 @@ const Header = () =>{
 
 const styles = StyleSheet.create({
     container:{
-        height:10
+        height:20,
+        width:'100%',
+        position:'absolute',
+        top:15
     }
 });
 export default Header;

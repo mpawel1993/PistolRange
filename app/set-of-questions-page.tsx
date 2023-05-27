@@ -80,8 +80,6 @@ const SetOfQuestionsPage = ({navigation}) => {
         navigation.navigate('ActivityPage');
     }
 
-    let back = '<-';
-
     return (<View style={styles.container}>
         <Image source={require('../assets/learning_image.png')} style={styles.button}/>
         <TouchableOpacity onPress={() => handleNavigateToActOfGunAndAmmo(categories[1])}>
