@@ -1,4 +1,4 @@
-import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import Field from "./field";
 import {Question} from "../model/model";
 import {LinearGradient} from "expo-linear-gradient";
@@ -7,13 +7,17 @@ const SetOfQuestionsPage = ({navigation}) => {
 
     const baseQuestions: Question[] = JSON.parse(JSON.stringify(require('../assets/questionList.json')));
 
-    let categories = ['Wszystkie' ,'Ustawa o Broni i Amunicji','Przechowywanie i noszenie Broni',
-        'Przewożenie broni środkami transportu publicznego', 'Bezpieczenstwo na strzelnicach','Sankcje Karne',
-        'Obrona Konieczna i Stan Wyższej Konieczności'];
+    let categories = ['WSZYSTKIE', 'USTAWA O BRONI I AMUNICJI', 'PRZECHOWYWANIE I NOSZENIE BRONI',
+        'PRZEWOŻENIE BRONI ŚRODKAMI TRANSPORTU PUBLICZNEGO', 'BEZPIECZENSTWO NA STRZELNICACH', 'SANKCJE KARNE',
+        'OBRONA KONIECZNA I STAN WYŻSZEJ KONIECZNOŚCI'];
 
     const handleNavigateToAll = (categoryName) => {
         let storageKey = 'all';
-        navigation.navigate('LearningPage', {questions: baseQuestions, categoryName:categoryName , storageKey: storageKey});
+        navigation.navigate('LearningPage', {
+            questions: baseQuestions,
+            categoryName: categoryName,
+            storageKey: storageKey
+        });
     }
 
     const handleNavigateToActOfGunAndAmmo = (categoryName) => {
@@ -98,16 +102,24 @@ const SetOfQuestionsPage = ({navigation}) => {
         <TouchableOpacity onPress={() => handleNavigationToSelfDefence(categories[6])}>
             <Field text={categories[6]}/>
         </TouchableOpacity>
+
         <View style={styles.back}>
-            <TouchableOpacity onPress={()=>navigateToActivityPage()}>
-                <LinearGradient style={styles.gradient} colors={['#94c02b', '#71912a']}>
-                    <Text style={styles.text}>{back}</Text>
-                </LinearGradient>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => handleNavigateToAll(categories[0])}>
-                <Field text={categories[0]}/>
-            </TouchableOpacity>
+            <View>
+                <TouchableOpacity onPress={() => navigateToActivityPage()}>
+                    <ImageBackground style={{width: 100, height: 100}} source={require('../assets/back_set.png')}/>
+                </TouchableOpacity>
+            </View>
+            <View style={{width: 10}}>
+            </View>
+            <View >
+                <TouchableOpacity onPress={() => handleNavigateToAll(categories[0])}>
+                    <LinearGradient colors={['#94c02b', '#71912a']} style={styles.gradient}>
+                        <Text style={{fontSize:20}}>{categories[0]}</Text>
+                    </LinearGradient>
+                </TouchableOpacity>
+            </View>
         </View>
+
     </View>)
 }
 
@@ -124,15 +136,15 @@ const styles = StyleSheet.create({
         width:300,
         height:50,
         resizeMode: 'contain'
-    },back:{
-        flexDirection:'row'
+    },back: {
+        paddingTop:3,
+        flexDirection: 'row',
     },gradient:{
+        width: 270,
+        height: 100,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor:'#94c02b',
-        width: 60,
-        paddingTop:20,
-        paddingBottom:20,
         fontWeight:'bold'
     }
 });

@@ -144,6 +144,11 @@ const ExamPage = ({navigation}) => {
         questions.map(question => {
             question.isButtonsDisabled = true;
             if(question.actualAnswer !== undefined){
+
+                question.possibleAnswer.filter(x => x.id == 'a')[0].gradient = ['grey', 'grey'];
+                question.possibleAnswer.filter(x => x.id == 'b')[0].gradient = ['grey', 'grey'];
+                question.possibleAnswer.filter(x => x.id == 'c')[0].gradient = ['grey', 'grey'];
+
                 if (question.actualAnswer === question.goodAnswer) {
                     question.possibleAnswer.filter(x => x.id == question.actualAnswer)[0].gradient = ['green', 'green'];
                     setActualQuestion({...actualQuestion, question});

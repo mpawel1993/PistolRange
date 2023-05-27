@@ -29,8 +29,7 @@ const styles = StyleSheet.create({
         fontSize:20,
         color:'white'
     },button:{
-        width:300,
-        height:200,
+        width:'90%',
         resizeMode: 'contain'
     }
 });

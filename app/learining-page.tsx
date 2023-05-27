@@ -8,6 +8,7 @@ import EndOfModuleModal from "./end-of-module-modal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import FromBeginningModal from "./from-begining-modal";
 import Field from "./field";
+import {LinearGradient} from "expo-linear-gradient";
 const LearningPage = ({navigation}) => {
     let [isQuestionsLoaded , setIsQuestionLoaded] = useState(false);
     const [params, setParams] = useState(navigation.state);
@@ -205,7 +206,7 @@ const LearningPage = ({navigation}) => {
         </View>
 
         <View>
-            <Text style={styles.text}>{actualQuestion.value} : {actualQuestion.id}</Text>
+            <Text style={styles.text}>{actualQuestion.value}{actualQuestion.paragraph}</Text>
         </View>
 
         <TouchableOpacity disabled={actualQuestion.isButtonsDisabled} onPress={() => handlePickUp('a')}>
@@ -226,13 +227,16 @@ const LearningPage = ({navigation}) => {
 
         <View style={{flexDirection: 'row', paddingTop: 15}}>
             <TouchableOpacity disabled={previousDisabled} onPress={() => handlePreviousQuestion()}>
-                <NavigationField text={'POPRZEDNIE'}/>
+                <Image source={require('../assets/lewo.png')}></Image>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => handleQuit()}>
-                <NavigationField text={'KONIEC'}/>
+                <LinearGradient
+                                colors={['#94c02b', '#71912a']}>
+                    <Text style={styles.text}>KONIEC</Text>
+                </LinearGradient>
             </TouchableOpacity>
             <TouchableOpacity disabled={nextButtonDisabled} onPress={() => handleNextQuestion()}>
-                <NavigationField text={'NASTĘPNE'}/>
+                <Image source={require('../assets/prawo.png')}></Image>
             </TouchableOpacity>
         </View>
         <EndOfModuleModal isModalVisible={isSummaryVisible} />

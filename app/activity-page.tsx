@@ -1,4 +1,4 @@
-import {Image, Linking, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {Image, Linking, Pressable, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import Field from "./field";
 import {Question} from "../model/model";
 import React from "react";
@@ -47,7 +47,7 @@ const ActivityPage = ({ navigation }) =>{
     }
 
     const loadInBrowser = () => {
-        Linking.openURL('www.google.pl').catch(err => console.error("Couldn't load page", err));
+        Linking.openURL('https://pistolrange.pl/promocje/').catch(err => console.error("Couldn't load page", err));
     };
 
     return(
