@@ -7,6 +7,7 @@ import Header from "./header";
 import EndOfModuleModal from "./end-of-module-modal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import FromBeginningModal from "./from-begining-modal";
+import Field from "./field";
 const LearningPage = ({navigation}) => {
     let [isQuestionsLoaded , setIsQuestionLoaded] = useState(false);
     const [params, setParams] = useState(navigation.state);
@@ -260,6 +261,11 @@ const styles = StyleSheet.create({
         color:'#98c135'
     },learningLogo:{
         width:300
+    },navImage:{
+        width: 50,
+        height: 50
+    }, navButton:{
+        width: 50,
     }
 });
 

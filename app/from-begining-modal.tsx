@@ -32,12 +32,12 @@ const FromBeginningModal = ({isModalVisible, userResponse}) => {
             }}>
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
-                    <Text style={styles.modalText}>Od początku?</Text>
+                    <Text style={styles.modalText}>OD POCZĄTKU?</Text>
                     <TouchableOpacity onPress={() => pickYes()}>
-                        <Field text={'tak'}/>
+                        <Field text={'TAK'}/>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => pickNo()}>
-                        <Field text={'nie'}/>
+                        <Field text={'NIE'}/>
                     </TouchableOpacity>
                 </View>
             </View>

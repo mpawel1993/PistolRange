@@ -5,7 +5,6 @@ const Field = ({text}) =>{
 
     return(<View style={styles.container}>
         <LinearGradient style={styles.gradient}
-            // Button Linear Gradient
             colors={['#94c02b', '#71912a']}>
             <Text style={styles.text}>{text}</Text>
         </LinearGradient>

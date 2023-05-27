@@ -1,4 +1,4 @@
-import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {Image, Linking, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import Field from "./field";
 import {Question} from "../model/model";
 import React from "react";
@@ -27,13 +27,15 @@ const ActivityPage = ({ navigation }) =>{
             }
             while(p);
         }
+
         let  finalQuestions: Question[] = [];
         numbers.forEach(a => {
             let question = baseQuestions.filter(q => q.id == a)[0];
             finalQuestions.push(question);
         });
+
         assignId(finalQuestions);
-         navigation.navigate('ExamPage', {questions: finalQuestions});
+        navigation.navigate('ExamPage', {questions: finalQuestions});
     }
 
     const assignId = (array: any[]) => {
@@ -44,16 +46,22 @@ const ActivityPage = ({ navigation }) =>{
         });
     }
 
+    const loadInBrowser = () => {
+        Linking.openURL('www.google.pl').catch(err => console.error("Couldn't load page", err));
+    };
+
     return(
         <View style={styles.container}>
-            <Image source={require('../assets/ward.png')} style={styles.word}/>
-            <TouchableOpacity onPress={()=>navigateToSetOfQuestions()}>
+            <Image source={require('../assets/welcome_message.png')} style={styles.word}/>
+            <TouchableOpacity onPress={() => navigateToSetOfQuestions()}>
                 <Field text={'NAUKA'}/>
             </TouchableOpacity>
-            <TouchableOpacity onPress={()=>navigateToExam()}>
+            <TouchableOpacity onPress={() => navigateToExam()}>
                 <Field text={'EGZAMIN'}/>
             </TouchableOpacity>
-            <Image source={require('../assets/baner.png')} style={styles.button}/>
+            <TouchableOpacity onPress={() => loadInBrowser()}>
+                <Image source={require('../assets/actual_sales_logo.png')} style={styles.button}/>
+            </TouchableOpacity>
         </View>);
 }
 

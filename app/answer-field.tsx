@@ -3,20 +3,22 @@ import {LinearGradient} from "expo-linear-gradient";
 
 const AnswerField = ({option, possibleAnswer, gradientColours}) => {
 
-    return (<View style={styles.container}>
-        <LinearGradient style={styles.gradient}
-                        colors={gradientColours == undefined ? ['blue', 'blue'] : gradientColours}
-                        start={{x: 0, y: 0}}
-                        end={{x: 1, y: 1}}>
-            <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
-                <View style={[{flex: 1, flexDirection: 'row'}]}>
-                    <Text style={styles.answerOption}>{option.toUpperCase()}</Text>
+    return (<View style={{flexDirection:'row'}}>
+        <View>
+            <Text style={styles.answerOption}>{option.toUpperCase()}</Text>
+        </View>
+        <View>
+            <LinearGradient style={styles.gradient}
+                            colors={gradientColours == undefined ? ['white', 'white'] : gradientColours}
+                            start={{x: 0, y: 0}}
+                            end={{x: 1, y: 1}}>
+                <View style={[{flexDirection: 'row', alignItems: 'center'}]}>
+                    <View style={[{flex: 5, justifyContent:'space-evenly', marginVertical:10}]}>
+                        <Text style={styles.text}>{possibleAnswer}</Text>
+                    </View>
                 </View>
-                <View style={[{flex: 5, justifyContent:'space-evenly', marginVertical:10}]}>
-                    <Text style={styles.text}>{possibleAnswer}</Text>
-                </View>
-            </View>
-        </LinearGradient>
+            </LinearGradient>
+        </View>
     </View>)
 }
 
@@ -28,7 +30,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: 1,
-        width: 300
+        width: 350
 
     },text:{
         fontSize:15,
@@ -37,6 +39,7 @@ const styles = StyleSheet.create({
         color:'white',
         fontSize:40,
         paddingLeft:10,
+        backgroundColor:'black'
     }
 });
 

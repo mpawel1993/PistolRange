@@ -25,12 +25,12 @@ const EndOfModuleModal = ({isModalVisible}) =>{
                 }}>
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
-                        <Text style={styles.modalText}>Brawo ukończyłeś moduł</Text>
+                        <Text style={styles.modalText}>BRAWO UKOŃCZYŁEŚ MODUŁ</Text>
                         <Image style={styles.video}
                             source={require('../assets/passed.gif')}
                         />
                         <TouchableOpacity onPress={() => closeModal()}>
-                            <NavigationField text={'Zamknij'}/>
+                            <NavigationField text={'ZAMKNIJ'}/>
                         </TouchableOpacity>
                     </View>
                 </View>
