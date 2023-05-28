@@ -1,8 +1,8 @@
 import {Alert, Image, Modal, StyleSheet, Text, TouchableOpacity, View} from "react-native";
-import NavigationField from "./navigation-field";
 import {useEffect, useState} from "react";
+import {LinearGradient} from "expo-linear-gradient";
 
-const ExamSummary = ({isModalVisible, finalInfo, navigation, passed}) => {
+const ExamSummary = ({isModalVisible, navigation, passed, good}) => {
 
     const [modalVisible, setModalVisible] = useState(false);
     useEffect(() => {
@@ -30,16 +30,70 @@ const ExamSummary = ({isModalVisible, finalInfo, navigation, passed}) => {
             }}>
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
-                    <Text style={styles.modalText}>Ukończono egzamin</Text>
+                    <Text style={styles.modalText}>UKOŃCZONO EGZAMIN</Text>
+                    <Text style={styles.modalText}>{good == 10 ?
+                        <Text style={{color:'green'}}>ZALICZONO</Text> : <Text style={{color:'red'}}>NIE ZALICZONO</Text>}</Text>
                     <Image style={styles.video}
                            source={passed ? require('../assets/passed.gif') : require('../assets/failed.gif')}
                     />
-                    <Text style={styles.modalText}>{finalInfo}</Text>
+                    <View style={{flexDirection: 'row'}}>
+                        <Text style={styles.modalText}>DOBRZE: {good} </Text>
+                        <Text style={styles.modalText}> ŹLE: {10 - good}</Text>
+                    </View>
+                    <View style={{height:10}}/>
+                    <View style={{width: 300}}>
+                        <Text style={{color: 'white'}}>LEGENDA: </Text>
+                        <View style={{height: 5}}/>
+                        <LinearGradient colors={['green', 'green']} style={{
+                            height: 30,
+                            width: 300,
+                            justifyContent: "center",
+                            alignItems: 'center'
+                        }}>
+                            <Text>PRAWIDŁOWA ODPOWIEDŹ</Text>
+                        </LinearGradient>
+                        <View style={{height: 5}}/>
+                        <LinearGradient colors={['red', 'red']} style={{
+                            height: 30,
+                            width: 300,
+                            justifyContent: "center",
+                            alignItems: 'center'
+                        }}>
+                            <Text>NIEPRAWIDŁOWA ODPOWIEDŹ</Text>
+                        </LinearGradient>
+                        <View style={{height: 5}}/>
+                        <LinearGradient colors={['grey', 'grey']} style={{
+                            height: 30,
+                            width: 300,
+                            justifyContent: "center",
+                            alignItems: 'center'
+                        }}>
+                            <Text>NIE ZAZNACZONA ODPOWIEDŹ</Text>
+                        </LinearGradient>
+                        <View style={{height: 5}}/>
+                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                            <Text style={styles.answerOption}>B</Text>
+                            <Text style={{color: 'white', height: 30, width: 300, fontSize: 15, paddingTop: 10}}>
+                                <Text style={{fontSize: 8}}>( podkreślenie)</Text> UDZIELONA ODPOWIEDŹ
+                            </Text>
+                        </View>
+                        <View style={{height: 10}}/>
+
+                    </View>
                     <TouchableOpacity onPress={() => closeModal()}>
-                        <NavigationField text={'Przeglądaj'}/>
+                        <LinearGradient
+                            style={{width: 300, height: 50, alignItems: 'center', justifyContent: 'center'}}
+                            colors={['#94c02b', '#71912a']}>
+                            <Text style={{fontSize: 20, color: '#2b2a29'}}>PRZEGLĄDAJ</Text>
+                        </LinearGradient>
                     </TouchableOpacity>
+                    <View style={{height: 10}}/>
                     <TouchableOpacity onPress={() => closeExam()}>
-                        <NavigationField text={'Zamknij'}/>
+                        <LinearGradient
+                            style={{width: 300, height: 50, alignItems: 'center', justifyContent: 'center'}}
+                            colors={['#94c02b', '#71912a']}>
+                            <Text style={{fontSize: 20, color: '#2b2a29'}}>ZAMKNIJ</Text>
+                        </LinearGradient>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -53,7 +107,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 22,
-
+        backgroundColor: 'black'
     },
     modalView: {
         margin: 20,
@@ -61,36 +115,11 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         padding: 35,
         alignItems: 'center',
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 4,
-        elevation: 5,
-    },
-    button: {
-        borderRadius: 20,
-        padding: 10,
-        elevation: 2,
-    },
-    buttonOpen: {
-        backgroundColor: '#F194FF',
-    },
-    buttonClose: {
-        backgroundColor: '#2196F3',
-    },
-    textStyle: {
-        color: 'white',
-        fontWeight: 'bold',
-        textAlign: 'center',
     },
     modalText: {
-        marginBottom: 15,
         textAlign: 'center',
         color: 'white',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
     },
     backgroundVideo: {
         height: 300,
@@ -104,6 +133,13 @@ const styles = StyleSheet.create({
     video: {
         width: 300,
         height: 300
+    },
+    answerOption: {
+        color: 'white',
+        paddingRight: 5,
+        backgroundColor: 'black',
+        textDecorationLine: 'underline',
+        fontSize: 30
     }
 });
 

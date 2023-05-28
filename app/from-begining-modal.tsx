@@ -1,7 +1,5 @@
-import {Alert, Image, Modal, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {Alert, Modal, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {useEffect, useState} from "react";
-import Field from "./field";
-import NavigationField from "./navigation-field";
 import {LinearGradient} from "expo-linear-gradient";
 
 const FromBeginningModal = ({isModalVisible, userResponse}) => {

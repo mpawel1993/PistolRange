@@ -1,7 +1,5 @@
 import {useEffect, useState} from "react";
 import {Pressable, View, Modal, Image, Text, Alert, StyleSheet, TouchableOpacity} from "react-native";
-import NavigationField from "./navigation-field";
-import Field from "./field";
 import {LinearGradient} from "expo-linear-gradient";
 
 const EndOfModuleModal = ({isModalVisible}) => {

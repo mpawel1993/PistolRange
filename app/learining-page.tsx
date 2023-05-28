@@ -1,14 +1,13 @@
 import {Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import AnswerField from "./answer-field";
-import NavigationField from "./navigation-field";
 import {PossibleAnswer, Question, StorageObject} from "../model/model";
-import {SetStateAction, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import Header from "./header";
 import EndOfModuleModal from "./end-of-module-modal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import FromBeginningModal from "./from-begining-modal";
-import Field from "./field";
 import {LinearGradient} from "expo-linear-gradient";
+import {log} from "expo-updates/build-cli/utils/log";
 
 const LearningPage = ({navigation}) => {
     let [isQuestionsLoaded, setIsQuestionLoaded] = useState(false);
@@ -67,6 +66,7 @@ const LearningPage = ({navigation}) => {
             setNextButtonDisabled(false);
             setPreviousButtonDisabled(true);
         } else if (actualQuestion.id >= questions.length) {
+            setPreviousButtonDisabled(false);
             setActualQuestion(questions.filter(x => x.id == questions.length)[0])
         } else {
             setNextButtonDisabled(false);
@@ -226,21 +226,25 @@ const LearningPage = ({navigation}) => {
                 <Text style={styles.text}>{actualQuestion.value}{actualQuestion.paragraph}</Text>
             </View>
         </View>
+
         <View style={{flex: 1.25, width: '100%', alignItems: 'center'}}>
             <TouchableOpacity disabled={actualQuestion.isButtonsDisabled} onPress={() => handlePickUp('a')}>
                 <AnswerField gradientColours={actualQuestion.possibleAnswer.filter(x => x.id === 'a')[0].gradient}
                              option={actualQuestion.possibleAnswer.filter(x => x.id === 'a')[0].id}
-                             possibleAnswer={actualQuestion.possibleAnswer.filter(x => x.id === 'a')[0].value}/>
+                             possibleAnswer={actualQuestion.possibleAnswer.filter(x => x.id === 'a')[0].value}
+                             isPicked={false}/>
             </TouchableOpacity>
             <TouchableOpacity disabled={actualQuestion.isButtonsDisabled} onPress={() => handlePickUp('b')}>
                 <AnswerField gradientColours={actualQuestion.possibleAnswer.filter(x => x.id === 'b')[0].gradient}
                              option={actualQuestion.possibleAnswer.filter(x => x.id === 'b')[0].id}
-                             possibleAnswer={actualQuestion.possibleAnswer.filter(x => x.id === 'b')[0].value}/>
+                             possibleAnswer={actualQuestion.possibleAnswer.filter(x => x.id === 'b')[0].value}
+                             isPicked={false}/>
             </TouchableOpacity>
             <TouchableOpacity disabled={actualQuestion.isButtonsDisabled} onPress={() => handlePickUp('c')}>
                 <AnswerField gradientColours={actualQuestion.possibleAnswer.filter(x => x.id === 'c')[0].gradient}
                              option={actualQuestion.possibleAnswer.filter(x => x.id === 'c')[0].id}
-                             possibleAnswer={actualQuestion.possibleAnswer.filter(x => x.id === 'c')[0].value}/>
+                             possibleAnswer={actualQuestion.possibleAnswer.filter(x => x.id === 'c')[0].value}
+                             isPicked={false}/>
             </TouchableOpacity>
         </View>
 

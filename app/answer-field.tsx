@@ -1,11 +1,13 @@
 import {StyleSheet, Text, View} from "react-native";
 import {LinearGradient} from "expo-linear-gradient";
+import {useState} from "react";
 
-const AnswerField = ({option, possibleAnswer, gradientColours}) => {
+const AnswerField = ({option, possibleAnswer, gradientColours, isPicked}) => {
+
 
     return (<View style={{flexDirection: 'row', padding: 3, alignItems: 'center'}}>
         <View>
-            <Text style={styles.answerOption}>{option.toUpperCase()}</Text>
+            <Text style={isPicked ?  styles.underlinedAnswerOption  : styles.answerOption}>{option.toUpperCase()}</Text>
         </View>
         <View>
             <LinearGradient style={styles.gradient}
@@ -36,13 +38,18 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: 1,
-        minWidth:'92%',
-        // width: 340,
+        width: 340,
         color: '#2b2a29',
         minHeight:80
     }, text: {
         fontSize: 13.8,
     }, answerOption: {
+        color: 'white',
+        fontSize: 40,
+        paddingRight: 5,
+        backgroundColor: 'black',
+    },
+    underlinedAnswerOption: {
         color: 'white',
         fontSize: 40,
         paddingRight: 5,

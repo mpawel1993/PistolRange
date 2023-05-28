@@ -12,6 +12,7 @@ export interface PossibleAnswer {
     id: string;
     value: string;
     gradient: any;
+    isPicked: boolean;
 }
 
 export interface StorageObject {

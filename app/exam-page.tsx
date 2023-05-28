@@ -1,9 +1,10 @@
-import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import AnswerField from "./answer-field";
-import NavigationField from "./navigation-field";
 import {PossibleAnswer, Question} from "../model/model";
 import {useEffect, useRef, useState} from "react";
 import ExamSummary from "./exam-summary";
+import {LinearGradient} from "expo-linear-gradient";
+import Header from "./header";
 
 const ExamPage = ({navigation}) => {
     const [time, setTime] = useState(1800 || 10);
@@ -25,6 +26,7 @@ const ExamPage = ({navigation}) => {
     const [finalInfo, setFinalInfo] = useState('');
     const [isExamPassed, setIsExamPassed] = useState(false);
     const [wasSummaryDisplayed, setWasSummaryDisplayed] = useState(false);
+    const [goodAnswers, setGoodAnswers] = useState(0);
 
     useEffect(() => {
         let que = params.params.questions.map(x => Object.assign({}, x));
@@ -71,8 +73,10 @@ const ExamPage = ({navigation}) => {
                 setTime(timerRef.current);
                 setFormattedTime(secondsToHms(timerRef.current));
             }
-            if (time < 0) {
-                summaryExam();
+            console.log('here' , );
+
+            if (timerRef.current < 0) {
+                handleQuit();
             }
         }, 1000);
         return () => {
@@ -148,6 +152,7 @@ const ExamPage = ({navigation}) => {
                 question.possibleAnswer.filter(x => x.id == 'a')[0].gradient = ['grey', 'grey'];
                 question.possibleAnswer.filter(x => x.id == 'b')[0].gradient = ['grey', 'grey'];
                 question.possibleAnswer.filter(x => x.id == 'c')[0].gradient = ['grey', 'grey'];
+                question.possibleAnswer.filter(x => x.id == question.actualAnswer)[0].isPicked = true;
 
                 if (question.actualAnswer === question.goodAnswer) {
                     question.possibleAnswer.filter(x => x.id == question.actualAnswer)[0].gradient = ['green', 'green'];
@@ -159,53 +164,83 @@ const ExamPage = ({navigation}) => {
                     setActualQuestion({...actualQuestion, question});
                 }
             }
+            setGoodAnswers(goodAnswers);
         });
-
-        let er = goodAnswers == 10 ? 'ZALICZONY' : 'NIEZALICZONY';
-        goodAnswers == 10 ? setIsExamPassed(true) : setIsExamPassed(false);
-
-        setFinalInfo(`Dobrze: ${goodAnswers} , Zle ${10 - goodAnswers}, Rezultat: ${er}`)
     }
 
     return (<View style={styles.container}>
-        <Text style={styles.header}>EGZAMIN({actualQuestion.id}/{questions.length})</Text>
-        <View>
-            <Text style={styles.text}>{formattedTime}</Text>
-        </View>
-        <View>
-            <Text style={styles.text}> {actualQuestion.value}</Text>
+        <View style={{flex: 0.09}}>
+            <Header/>
         </View>
 
+        <View style={{flex: 0.20}}>
+            <ImageBackground source={require('../assets/animal_header.png')}
+                             style={{width: 400, height: 75, flexDirection: 'row'}} resizeMode={"stretch"}>
+                <View style={{width: 130, alignItems: 'center'}}>
+                    <Text style={{color: '#2b2a29', fontWeight:'bold', paddingTop: 50}}>{actualQuestion.id}/{questions.length}</Text>
+                </View>
+                <View style={{width: 285, justifyContent: 'center', alignItems: 'center'}}>
+                    <View style={{flexDirection:'row'}}>
+                        <Text style={{color: '#2b2a29', fontSize: 20, fontWeight:'bold'}}>EGZAMIN</Text>
+                        <View style={{width: 10}}/>
+                        <Text style={{color: '#2b2a29', fontSize: 20, fontWeight:'bold'}}>{formattedTime}</Text>
+                    </View>
+                </View>
+            </ImageBackground>
+        </View>
+
+        <View style={{
+            flex: 0.5,
+            width: '100%',
+            alignItems: 'center',
+            paddingLeft: 10,
+            paddingRight: 10
+        }}>
+            <View style={{paddingTop: 5}}>
+                <Text style={styles.text}>{actualQuestion.value}{actualQuestion.paragraph}</Text>
+            </View>
+        </View>
+
+        <View style={{flex: 1.25, width: '100%', alignItems: 'center'}}>
         <TouchableOpacity disabled={actualQuestion.isButtonsDisabled} onPress={() => handlePickUp('a')}>
             <AnswerField gradientColours={actualQuestion.possibleAnswer.filter(x => x.id === 'a')[0].gradient}
                          option={actualQuestion.possibleAnswer.filter(x => x.id === 'a')[0].id}
-                         possibleAnswer={actualQuestion.possibleAnswer.filter(x => x.id === 'a')[0].value}/>
+                         possibleAnswer={actualQuestion.possibleAnswer.filter(x => x.id === 'a')[0].value}
+                         isPicked={actualQuestion.possibleAnswer.filter(x => x.id === 'a')[0].isPicked}/>
         </TouchableOpacity>
         <TouchableOpacity disabled={actualQuestion.isButtonsDisabled} onPress={() => handlePickUp('b')}>
             <AnswerField gradientColours={actualQuestion.possibleAnswer.filter(x => x.id === 'b')[0].gradient}
                          option={actualQuestion.possibleAnswer.filter(x => x.id === 'b')[0].id}
-                         possibleAnswer={actualQuestion.possibleAnswer.filter(x => x.id === 'b')[0].value}/>
+                         possibleAnswer={actualQuestion.possibleAnswer.filter(x => x.id === 'b')[0].value}
+                         isPicked={actualQuestion.possibleAnswer.filter(x => x.id === 'b')[0].isPicked}/>
         </TouchableOpacity>
         <TouchableOpacity disabled={actualQuestion.isButtonsDisabled} onPress={() => handlePickUp('c')}>
             <AnswerField gradientColours={actualQuestion.possibleAnswer.filter(x => x.id === 'c')[0].gradient}
                          option={actualQuestion.possibleAnswer.filter(x => x.id === 'c')[0].id}
-                         possibleAnswer={actualQuestion.possibleAnswer.filter(x => x.id === 'c')[0].value}/>
+                         possibleAnswer={actualQuestion.possibleAnswer.filter(x => x.id === 'c')[0].value}
+                         isPicked={actualQuestion.possibleAnswer.filter(x => x.id === 'c')[0].isPicked}/>
         </TouchableOpacity>
-
-        <View style={{flexDirection: 'row', paddingTop: 15}}>
-            <TouchableOpacity disabled={previousDisabled} onPress={() => handlePreviousQuestion()}>
-                <NavigationField text={'POPRZEDNIE'}/>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => handleQuit()}>
-                <NavigationField text={'KONIEC'}/>
-            </TouchableOpacity>
-            <TouchableOpacity disabled={nextButtonDisabled} onPress={() => handleNextQuestion()}>
-                <NavigationField text={'NASTĘPNE'}/>
-            </TouchableOpacity>
-            <ExamSummary isModalVisible={isSummaryVisible} finalInfo={finalInfo} navigation={navigation}
-                         passed={isExamPassed}/>
         </View>
 
+        <View style={{flex: 0.25, width: '100%', alignItems: 'center'}}>
+            <View style={{flexDirection: 'row', paddingTop: 15}}>
+                <TouchableOpacity disabled={previousDisabled} onPress={() => handlePreviousQuestion()}>
+                    <Image style={{width: 100, height: 55}} source={require('../assets/lewo.png')}/>
+                </TouchableOpacity>
+                <View style={{width: 10}}/>
+                <TouchableOpacity onPress={() => handleQuit()}>
+                    <LinearGradient style={{width: 150, height: 55, alignItems: "center", justifyContent: 'center'}}
+                                    colors={['#94c02b', '#71912a']}>
+                        <Text style={{fontSize: 15, color: '#2b2a29',padding: 5}}>KONIEC</Text>
+                    </LinearGradient>
+                </TouchableOpacity>
+                <View style={{width: 10}}/>
+                <TouchableOpacity disabled={nextButtonDisabled} onPress={() => handleNextQuestion()}>
+                    <Image style={{width: 100, height: 55}} source={require('../assets/prawo.png')}/>
+                </TouchableOpacity>
+            </View>
+        </View>
+        <ExamSummary isModalVisible={isSummaryVisible} good={goodAnswers} navigation={navigation} passed={isExamPassed}/>
     </View>)
 }
 
@@ -216,9 +251,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderWidth: 1,
     }, text: {
-        fontSize: 20,
+        fontSize: 15,
         color: '#98c135',
-        padding: 5
+        padding: 5,
     }, button: {
         width: 300,
         height: 100,
