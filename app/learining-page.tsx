@@ -9,14 +9,15 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import FromBeginningModal from "./from-begining-modal";
 import Field from "./field";
 import {LinearGradient} from "expo-linear-gradient";
+
 const LearningPage = ({navigation}) => {
-    let [isQuestionsLoaded , setIsQuestionLoaded] = useState(false);
+    let [isQuestionsLoaded, setIsQuestionLoaded] = useState(false);
     const [params, setParams] = useState(navigation.state);
     const [category, setCategory] = useState('');
     const [isSummaryVisible, setIsSummaryVisible] = useState(false);
     const [questions, setQuestions] = useState([] as Question[]); //Filtered questions list
     const [actualQuestion, setActualQuestion] = useState({//Actual Loaded Questions
-        id:1,
+        id: 1,
         value: '', possibleAnswer:
             [{id: 'a', value: '', gradient: ['white', 'white']} as PossibleAnswer,
                 {id: 'b', value: '', gradient: ['white', 'white']} as PossibleAnswer,
@@ -40,21 +41,21 @@ const LearningPage = ({navigation}) => {
     }, [params]);
 
     useEffect(() => {
-            if (questions.length !== 0 && !isQuestionsLoaded) {
-                let que = questions.map(x => Object.assign({}, x));
-                que.map(a => {
-                    a.possibleAnswer.map(b => b.gradient = ['#94c02b', '#71912a']);
-                });
-                const question = questions.filter(x => x.id == 1)[0];
+        if (questions.length !== 0 && !isQuestionsLoaded) {
+            let que = questions.map(x => Object.assign({}, x));
+            que.map(a => {
+                a.possibleAnswer.map(b => b.gradient = ['#94c02b', '#71912a']);
+            });
+            const question = questions.filter(x => x.id == 1)[0];
+            setActualQuestion(question);
+            setIsQuestionLoaded(true);
+        } else {
+            if (questions.length !== 0) {
+                const question = questions.filter(x => x.actualAnswer == undefined)[0];
                 setActualQuestion(question);
                 setIsQuestionLoaded(true);
-            }else {
-                if(questions.length !== 0){
-                    const question = questions.filter(x => x.actualAnswer == undefined)[0];
-                    setActualQuestion(question);
-                    setIsQuestionLoaded(true);
-                }
             }
+        }
     }, [questions]);
 
     useEffect(() => {
@@ -145,7 +146,7 @@ const LearningPage = ({navigation}) => {
     }
 
     useEffect(() => {
-        if(userResponse === 'no'){
+        if (userResponse === 'no') {
             readAsyncData();
         }
     }, [userResponse]);
@@ -177,7 +178,7 @@ const LearningPage = ({navigation}) => {
     const checkAsyncData = async () => {
         try {
             const item = await AsyncStorage.getItem(storageKey);
-            if(item !== null){
+            if (item !== null) {
                 setIsStorageItemsExist(true);
             }
         } catch (error) {
@@ -188,7 +189,7 @@ const LearningPage = ({navigation}) => {
     const readAsyncData = async () => {
         try {
             const item = await AsyncStorage.getItem(storageKey);
-            if(item !== null){
+            if (item !== null) {
                 let parsed = JSON.parse(item) as StorageObject;
                 setQuestions(parsed.questions);
             }
@@ -198,77 +199,95 @@ const LearningPage = ({navigation}) => {
     }
 
     return (<View style={styles.container}>
-        <Header/>
-        <View>
-            <ImageBackground source={require('../assets/learning_logo.png')} resizeMode="cover" style={styles.learningLogo}>
+        <View style={{flex: 0.09, borderColor: 'yellow', borderWidth: 1}}>
+            <Header/>
+        </View>
+        <View style={{flex: 0.20, borderColor: 'red', borderWidth: 1, width: '100%', alignItems: 'center'}}>
+            <ImageBackground source={require('../assets/learning_logo.png')} resizeMode="cover"
+                             style={styles.learningLogo}>
                 <Text style={styles.text}>{category}</Text>
             </ImageBackground>
         </View>
 
-        <View>
+        <View style={{
+            flex: 0.5,
+            borderColor: 'red',
+            borderWidth: 1,
+            width: '100%',
+            alignItems: 'center',
+            paddingLeft: 10,
+            paddingRight: 10
+        }}>
             <Text style={styles.text}>{actualQuestion.value}{actualQuestion.paragraph}</Text>
         </View>
 
-        <TouchableOpacity disabled={actualQuestion.isButtonsDisabled} onPress={() => handlePickUp('a')}>
-            <AnswerField gradientColours={actualQuestion.possibleAnswer.filter(x => x.id === 'a')[0].gradient}
-                         option={actualQuestion.possibleAnswer.filter(x => x.id === 'a')[0].id}
-                         possibleAnswer={actualQuestion.possibleAnswer.filter(x => x.id === 'a')[0].value}/>
-        </TouchableOpacity>
-        <TouchableOpacity disabled={actualQuestion.isButtonsDisabled} onPress={() => handlePickUp('b')}>
-            <AnswerField gradientColours={actualQuestion.possibleAnswer.filter(x => x.id === 'b')[0].gradient}
-                         option={actualQuestion.possibleAnswer.filter(x => x.id === 'b')[0].id}
-                         possibleAnswer={actualQuestion.possibleAnswer.filter(x => x.id === 'b')[0].value}/>
-        </TouchableOpacity>
-        <TouchableOpacity disabled={actualQuestion.isButtonsDisabled} onPress={() => handlePickUp('c')}>
-            <AnswerField gradientColours={actualQuestion.possibleAnswer.filter(x => x.id === 'c')[0].gradient}
-                         option={actualQuestion.possibleAnswer.filter(x => x.id === 'c')[0].id}
-                         possibleAnswer={actualQuestion.possibleAnswer.filter(x => x.id === 'c')[0].value}/>
-        </TouchableOpacity>
-
-        <View style={{flexDirection: 'row', paddingTop: 15}}>
-            <TouchableOpacity disabled={previousDisabled} onPress={() => handlePreviousQuestion()}>
-                <Image source={require('../assets/lewo.png')}></Image>
+        <View style={{flex: 1.25, borderColor: 'red', borderWidth: 1, width: '100%', alignItems: 'center'}}>
+            <TouchableOpacity disabled={actualQuestion.isButtonsDisabled} onPress={() => handlePickUp('a')}>
+                <AnswerField gradientColours={actualQuestion.possibleAnswer.filter(x => x.id === 'a')[0].gradient}
+                             option={actualQuestion.possibleAnswer.filter(x => x.id === 'a')[0].id}
+                             possibleAnswer={actualQuestion.possibleAnswer.filter(x => x.id === 'a')[0].value}/>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => handleQuit()}>
-                <LinearGradient
-                                colors={['#94c02b', '#71912a']}>
-                    <Text style={styles.text}>KONIEC</Text>
-                </LinearGradient>
+            <TouchableOpacity disabled={actualQuestion.isButtonsDisabled} onPress={() => handlePickUp('b')}>
+                <AnswerField gradientColours={actualQuestion.possibleAnswer.filter(x => x.id === 'b')[0].gradient}
+                             option={actualQuestion.possibleAnswer.filter(x => x.id === 'b')[0].id}
+                             possibleAnswer={actualQuestion.possibleAnswer.filter(x => x.id === 'b')[0].value}/>
             </TouchableOpacity>
-            <TouchableOpacity disabled={nextButtonDisabled} onPress={() => handleNextQuestion()}>
-                <Image source={require('../assets/prawo.png')}></Image>
+            <TouchableOpacity disabled={actualQuestion.isButtonsDisabled} onPress={() => handlePickUp('c')}>
+                <AnswerField gradientColours={actualQuestion.possibleAnswer.filter(x => x.id === 'c')[0].gradient}
+                             option={actualQuestion.possibleAnswer.filter(x => x.id === 'c')[0].id}
+                             possibleAnswer={actualQuestion.possibleAnswer.filter(x => x.id === 'c')[0].value}/>
             </TouchableOpacity>
         </View>
-        <EndOfModuleModal isModalVisible={isSummaryVisible} />
-        <FromBeginningModal isModalVisible={isStorageItemsExist} userResponse = {sendData}/>
+
+        <View style={{flex: 0.25, borderColor: 'red', borderWidth: 1, width: '100%', alignItems: 'center'}}>
+            <View style={{flexDirection: 'row', paddingTop: 15}}>
+                <TouchableOpacity disabled={previousDisabled} onPress={() => handlePreviousQuestion()}>
+                    <Image style={{width: 100, height: 55}} source={require('../assets/lewo.png')}/>
+                </TouchableOpacity>
+                <View style={{width: 10}}/>
+                <TouchableOpacity onPress={() => handleQuit()}>
+                    <LinearGradient style={{width: 150, height: 55, alignItems: "center", justifyContent: 'center'}}
+                                    colors={['#94c02b', '#71912a']}>
+                        <Text style={styles.btnText}>KONIEC</Text>
+                    </LinearGradient>
+                </TouchableOpacity>
+                <View style={{width: 10}}/>
+                <TouchableOpacity disabled={nextButtonDisabled} onPress={() => handleNextQuestion()}>
+                    <Image style={{width: 100, height: 55}} source={require('../assets/prawo.png')}/>
+                </TouchableOpacity>
+            </View>
+            <EndOfModuleModal isModalVisible={isSummaryVisible}/>
+            <FromBeginningModal isModalVisible={isStorageItemsExist} userResponse={sendData}/>
+        </View>
     </View>)
 }
 
 const styles = StyleSheet.create({
-    container:{
-        flex:1,
+    container: {
+        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        borderWidth: 1,
-    },text: {
-        fontSize: 20,
+    }, text: {
+        fontSize: 15,
         color: '#98c135',
         padding: 5
-    },button:{
-        width:300,
-        height:100,
+    }, btnText: {
+        fontSize: 15,
+        color: '#2b2a29',
+        padding: 5
+    }, button: {
         resizeMode: 'contain'
-    },question:{
-        backgroundColor:'red'
-    },header:{
-        fontSize:30,
-        color:'#98c135'
-    },learningLogo:{
-        width:300
-    },navImage:{
+    }, question: {
+        backgroundColor: 'red'
+    }, header: {
+        fontSize: 30,
+        color: '#98c135'
+    }, learningLogo: {
+        width: 350
+    }, navImage: {
         width: 50,
         height: 50
-    }, navButton:{
+    }, navButton: {
         width: 50,
     }
 });

@@ -9,7 +9,7 @@ const FromBeginningModal = ({isModalVisible, userResponse}) => {
 
     useEffect(() => {
         setModalVisible(isModalVisible);
-    },[isModalVisible]);
+    }, [isModalVisible]);
 
     const pickYes = () => {
         setModalVisible(false);
@@ -21,7 +21,7 @@ const FromBeginningModal = ({isModalVisible, userResponse}) => {
         userResponse('no');
     }
 
-    return ( <View>
+    return (<View>
         <Modal
             animationType="slide"
             transparent={true}
@@ -55,8 +55,8 @@ const styles = StyleSheet.create({
     },
     modalView: {
         margin: 20,
-        borderColor:'white',
-        borderWidth:1,
+        borderColor: 'white',
+        borderWidth: 1,
         backgroundColor: 'black',
         borderRadius: 20,
         padding: 35,
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     modalText: {
         marginBottom: 15,
         textAlign: 'center',
-        color:'white',
+        color: 'white',
         fontWeight: 'bold'
     },
     backgroundVideo: {
@@ -101,9 +101,9 @@ const styles = StyleSheet.create({
         bottom: 0,
         right: 0
     },
-    video:{
-        width:300,
-        height:300
+    video: {
+        width: 300,
+        height: 300
     }
 });
 

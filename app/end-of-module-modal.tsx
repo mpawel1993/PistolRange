@@ -1,13 +1,13 @@
 import {useEffect, useState} from "react";
-import {Pressable, View, Modal,Image, Text, Alert, StyleSheet, TouchableOpacity} from "react-native";
+import {Pressable, View, Modal, Image, Text, Alert, StyleSheet, TouchableOpacity} from "react-native";
 import NavigationField from "./navigation-field";
 
-const EndOfModuleModal = ({isModalVisible}) =>{
+const EndOfModuleModal = ({isModalVisible}) => {
     const [modalVisible, setModalVisible] = useState(false);
 
     useEffect(() => {
         setModalVisible(isModalVisible);
-    },[isModalVisible]);
+    }, [isModalVisible]);
 
     const closeModal = () => {
         return setModalVisible(false);
@@ -27,7 +27,7 @@ const EndOfModuleModal = ({isModalVisible}) =>{
                     <View style={styles.modalView}>
                         <Text style={styles.modalText}>BRAWO UKOŃCZYŁEŚ MODUŁ</Text>
                         <Image style={styles.video}
-                            source={require('../assets/passed.gif')}
+                               source={require('../assets/passed.gif')}
                         />
                         <TouchableOpacity onPress={() => closeModal()}>
                             <NavigationField text={'ZAMKNIJ'}/>
@@ -91,9 +91,9 @@ const styles = StyleSheet.create({
         bottom: 0,
         right: 0
     },
-    video:{
-        width:300,
-        height:300
+    video: {
+        width: 300,
+        height: 300
     }
 });
 

@@ -3,7 +3,7 @@ import Field from "./field";
 import {Question} from "../model/model";
 import React from "react";
 
-const ActivityPage = ({ navigation }) =>{
+const ActivityPage = ({navigation}) => {
 
     const navigateToSetOfQuestions = () => {
         navigation.navigate('SetOfQuestionsPage');
@@ -21,14 +21,14 @@ const ActivityPage = ({ navigation }) =>{
             do {
                 n = Math.floor(Math.random() * (max - min + 1)) + min;
                 p = numbers.includes(n);
-                if(!p){
+                if (!p) {
                     numbers.push(n);
                 }
             }
-            while(p);
+            while (p);
         }
 
-        let  finalQuestions: Question[] = [];
+        let finalQuestions: Question[] = [];
         numbers.forEach(a => {
             let question = baseQuestions.filter(q => q.id == a)[0];
             finalQuestions.push(question);
@@ -50,7 +50,7 @@ const ActivityPage = ({ navigation }) =>{
         Linking.openURL('https://pistolrange.pl/promocje/').catch(err => console.error("Couldn't load page", err));
     };
 
-    return(
+    return (
         <View style={styles.container}>
             <Image source={require('../assets/welcome_message.png')} style={styles.word}/>
             <TouchableOpacity onPress={() => navigateToSetOfQuestions()}>
@@ -66,19 +66,19 @@ const ActivityPage = ({ navigation }) =>{
 }
 
 const styles = StyleSheet.create({
-    container:{
-        flex:1,
+    container: {
+        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-    },text:{
-        fontSize:20,
-        color:'white'
-    },button:{
-        width:350,
+    }, text: {
+        fontSize: 20,
+        color: 'white'
+    }, button: {
+        width: 350,
         height: 250,
         resizeMode: 'contain'
-    },word:{
-        width:300,
+    }, word: {
+        width: 300,
         height: 300,
         resizeMode: 'contain'
     }

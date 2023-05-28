@@ -4,7 +4,7 @@ export interface Question {
     paragraph: string;
     possibleAnswer: PossibleAnswer[];
     goodAnswer: string;
-    actualAnswer:string;
+    actualAnswer: string;
     isButtonsDisabled: boolean;
 }
 
@@ -16,5 +16,5 @@ export interface PossibleAnswer {
 
 export interface StorageObject {
     questions: Question[];
-    actualQuestion:Question;
+    actualQuestion: Question;
 }

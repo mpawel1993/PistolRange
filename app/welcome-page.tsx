@@ -1,7 +1,7 @@
 import {Image, View, StyleSheet, TouchableOpacity} from "react-native";
 import {useEffect} from "react";
 
-const WelcomePage = ({ navigation }) => {
+const WelcomePage = ({navigation}) => {
 
     const navigateToStartPage = () => {
         navigation.navigate('ActivityPage');
@@ -20,16 +20,16 @@ const WelcomePage = ({ navigation }) => {
 }
 
 const styles = StyleSheet.create({
-    container:{
-        flex:1,
+    container: {
+        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: 1,
-    },text:{
-        fontSize:20,
-        color:'white'
-    },button:{
-        width:'90%',
+    }, text: {
+        fontSize: 20,
+        color: 'white'
+    }, button: {
+        width: '90%',
         resizeMode: 'contain'
     }
 });

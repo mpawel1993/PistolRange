@@ -1,10 +1,10 @@
 import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {LinearGradient} from "expo-linear-gradient";
 
-const NavigationField = ({text}) =>{
+const NavigationField = ({text}) => {
 
 
-    return(<View >
+    return (<View>
         <LinearGradient style={styles.container}
             // Button Linear Gradient
                         colors={['#515160', '#414941']}>
@@ -14,19 +14,19 @@ const NavigationField = ({text}) =>{
 }
 
 const styles = StyleSheet.create({
-    container:{
+    container: {
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: 1,
-        backgroundColor:'#34333d',
-        borderColor:'#fefefe',
-        borderRadius:10,
-        height:50,
+        backgroundColor: '#34333d',
+        borderColor: '#fefefe',
+        borderRadius: 10,
+        height: 50,
         width: 100,
 
-    },text:{
-        fontSize:15,
-        color:'#2b2a29'
+    }, text: {
+        fontSize: 15,
+        color: '#2b2a29'
     }
 });
 

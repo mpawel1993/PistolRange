@@ -2,12 +2,12 @@ import {Alert, Image, Modal, StyleSheet, Text, TouchableOpacity, View} from "rea
 import NavigationField from "./navigation-field";
 import {useEffect, useState} from "react";
 
-const ExamSummary = ({isModalVisible , finalInfo, navigation , passed}) => {
+const ExamSummary = ({isModalVisible, finalInfo, navigation, passed}) => {
 
     const [modalVisible, setModalVisible] = useState(false);
     useEffect(() => {
         setModalVisible(isModalVisible);
-    },[isModalVisible]);
+    }, [isModalVisible]);
 
 
     const closeExam = () => {
@@ -19,7 +19,7 @@ const ExamSummary = ({isModalVisible , finalInfo, navigation , passed}) => {
         setModalVisible(false);
     }
 
-    return ( <View>
+    return (<View>
         <Modal
             animationType="slide"
             transparent={true}
@@ -32,7 +32,7 @@ const ExamSummary = ({isModalVisible , finalInfo, navigation , passed}) => {
                 <View style={styles.modalView}>
                     <Text style={styles.modalText}>Ukończono egzamin</Text>
                     <Image style={styles.video}
-                           source={passed? require('../assets/passed.gif') : require('../assets/failed.gif')}
+                           source={passed ? require('../assets/passed.gif') : require('../assets/failed.gif')}
                     />
                     <Text style={styles.modalText}>{finalInfo}</Text>
                     <TouchableOpacity onPress={() => closeModal()}>
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     modalText: {
         marginBottom: 15,
         textAlign: 'center',
-        color:'white',
+        color: 'white',
         fontWeight: 'bold'
     },
     backgroundVideo: {
@@ -101,9 +101,9 @@ const styles = StyleSheet.create({
         bottom: 0,
         right: 0
     },
-    video:{
-        width:300,
-        height:300
+    video: {
+        width: 300,
+        height: 300
     }
 });
 

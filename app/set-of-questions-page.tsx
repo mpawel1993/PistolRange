@@ -27,28 +27,28 @@ const SetOfQuestionsPage = ({navigation}) => {
         let set3 = baseQuestions.filter(x => x.id >= 164 && x.id <= 169);
         let actual = [...set1, ...set2, ...set3];
         assignId(actual);
-        navigation.navigate('LearningPage', {questions: actual, categoryName:categoryName, storageKey: storageKey});
+        navigation.navigate('LearningPage', {questions: actual, categoryName: categoryName, storageKey: storageKey});
     }
 
     const handleNavigationToCarryGun = (categoryName) => {
         let storageKey = 'CarryGun';
         let actual = baseQuestions.filter(x => x.id >= 146 && x.id <= 153);
         assignId(actual);
-        navigation.navigate('LearningPage', {questions: actual, categoryName:categoryName, storageKey: storageKey});
+        navigation.navigate('LearningPage', {questions: actual, categoryName: categoryName, storageKey: storageKey});
     }
 
     const handleNavigationToPublicTransport = (categoryName) => {
         let storageKey = 'PublicTransport';
         let actual = baseQuestions.filter(x => x.id >= 159 && x.id <= 163);
         assignId(actual);
-        navigation.navigate('LearningPage', {questions: actual, categoryName:categoryName, storageKey: storageKey});
+        navigation.navigate('LearningPage', {questions: actual, categoryName: categoryName, storageKey: storageKey});
     }
 
     const handleNavigationToSafetyOnShootingRange = (categoryName) => {
         let storageKey = 'SafetyOnShootingRange';
         let actual = baseQuestions.filter(x => x.id >= 170 && x.id <= 184);
         assignId(actual);
-        navigation.navigate('LearningPage', {questions: actual, categoryName:categoryName, storageKey: storageKey});
+        navigation.navigate('LearningPage', {questions: actual, categoryName: categoryName, storageKey: storageKey});
     }
 
     const handleNavigationToCriminalSanctions = (categoryName) => {
@@ -58,14 +58,14 @@ const SetOfQuestionsPage = ({navigation}) => {
         let actual = [];
         actual = [...set1, ...set2];
         assignId(actual);
-        navigation.navigate('LearningPage', {questions: actual, categoryName:categoryName, storageKey: storageKey});
+        navigation.navigate('LearningPage', {questions: actual, categoryName: categoryName, storageKey: storageKey});
     }
 
     const handleNavigationToSelfDefence = (categoryName) => {
         let storageKey = 'SelfDefence';
         let actual = baseQuestions.filter(x => x.id >= 194 && x.id <= 196);
         assignId(actual)
-        navigation.navigate('LearningPage', {questions: actual, categoryName:categoryName, storageKey: storageKey});
+        navigation.navigate('LearningPage', {questions: actual, categoryName: categoryName, storageKey: storageKey});
     }
 
     const assignId = (array: any[]) => {
@@ -109,41 +109,41 @@ const SetOfQuestionsPage = ({navigation}) => {
             </View>
             <View style={{width: 10}}>
             </View>
-            <View >
+            <View>
                 <TouchableOpacity onPress={() => handleNavigateToAll(categories[0])}>
                     <LinearGradient colors={['#94c02b', '#71912a']} style={styles.gradient}>
-                        <Text style={{fontSize:20}}>{categories[0]}</Text>
+                        <Text style={{fontSize: 20}}>{categories[0]}</Text>
                     </LinearGradient>
                 </TouchableOpacity>
             </View>
         </View>
-
     </View>)
 }
 
 const styles = StyleSheet.create({
-    container:{
-        flex:1,
+    container: {
+        display: 'flex',
+        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: 1,
-    },text:{
-        fontSize:20,
-        color:'white'
-    },button:{
-        width:300,
-        height:50,
+    }, text: {
+        fontSize: 20,
+        color: 'white'
+    }, button: {
+        width: 300,
+        height: 50,
         resizeMode: 'contain'
-    },back: {
-        paddingTop:3,
+    }, back: {
+        paddingTop: 3,
         flexDirection: 'row',
-    },gradient:{
+    }, gradient: {
         width: 270,
         height: 100,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor:'#94c02b',
-        fontWeight:'bold'
+        backgroundColor: '#94c02b',
+        fontWeight: 'bold'
     }
 });
 

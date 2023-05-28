@@ -13,8 +13,8 @@ const App = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor:'black'
-    },background:{
+        backgroundColor: 'black'
+    }, background: {
         flex: 1,
     }
 });

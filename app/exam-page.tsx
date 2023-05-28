@@ -6,14 +6,14 @@ import {useEffect, useRef, useState} from "react";
 import ExamSummary from "./exam-summary";
 
 const ExamPage = ({navigation}) => {
-    const [time, setTime] = useState(1800|| 10);
+    const [time, setTime] = useState(1800 || 10);
     const [formattedTime, setFormattedTime] = useState('30min: 0 sec');
     const timerRef = useRef(time);
     let isQuestionsLoaded = false;
     const [params, setParams] = useState(navigation.state);
     const [questions, setQuestions] = useState([] as Question[]); //Filtered questions list
     const [actualQuestion, setActualQuestion] = useState({//Actual Loaded Questions
-        id:1,
+        id: 1,
         value: '', possibleAnswer:
             [{id: 'a', value: '', gradient: ['white', 'white']} as PossibleAnswer,
                 {id: 'b', value: '', gradient: ['white', 'white']} as PossibleAnswer,
@@ -71,7 +71,7 @@ const ExamPage = ({navigation}) => {
                 setTime(timerRef.current);
                 setFormattedTime(secondsToHms(timerRef.current));
             }
-            if(time < 0){
+            if (time < 0) {
                 summaryExam();
             }
         }, 1000);
@@ -93,7 +93,7 @@ const ExamPage = ({navigation}) => {
         summaryExam();
         setIsSummaryVisible(true);
         setWasSummaryDisplayed(true);
-        if(wasSummaryDisplayed == true){
+        if (wasSummaryDisplayed == true) {
             navigation.navigate('ActivityPage');
         }
     }
@@ -138,12 +138,12 @@ const ExamPage = ({navigation}) => {
         setActualQuestion(previous);
     }
 
-    const summaryExam = () =>{
+    const summaryExam = () => {
         let goodAnswers = 0;
 
         questions.map(question => {
             question.isButtonsDisabled = true;
-            if(question.actualAnswer !== undefined){
+            if (question.actualAnswer !== undefined) {
 
                 question.possibleAnswer.filter(x => x.id == 'a')[0].gradient = ['grey', 'grey'];
                 question.possibleAnswer.filter(x => x.id == 'b')[0].gradient = ['grey', 'grey'];
@@ -164,7 +164,7 @@ const ExamPage = ({navigation}) => {
         let er = goodAnswers == 10 ? 'ZALICZONY' : 'NIEZALICZONY';
         goodAnswers == 10 ? setIsExamPassed(true) : setIsExamPassed(false);
 
-        setFinalInfo(`Dobrze: ${goodAnswers} , Zle ${10 - goodAnswers}, Rezultat: ${er}` )
+        setFinalInfo(`Dobrze: ${goodAnswers} , Zle ${10 - goodAnswers}, Rezultat: ${er}`)
     }
 
     return (<View style={styles.container}>
@@ -202,29 +202,30 @@ const ExamPage = ({navigation}) => {
             <TouchableOpacity disabled={nextButtonDisabled} onPress={() => handleNextQuestion()}>
                 <NavigationField text={'NASTĘPNE'}/>
             </TouchableOpacity>
-            <ExamSummary isModalVisible={isSummaryVisible} finalInfo={finalInfo} navigation={navigation} passed={isExamPassed}/>
+            <ExamSummary isModalVisible={isSummaryVisible} finalInfo={finalInfo} navigation={navigation}
+                         passed={isExamPassed}/>
         </View>
 
     </View>)
 }
 
 const styles = StyleSheet.create({
-    container:{
-        flex:1,
+    container: {
+        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: 1,
-    },text: {
+    }, text: {
         fontSize: 20,
         color: '#98c135',
         padding: 5
-    },button:{
-        width:300,
-        height:100,
+    }, button: {
+        width: 300,
+        height: 100,
         resizeMode: 'contain'
-    },header:{
-        fontSize:30,
-        color:'#98c135'
+    }, header: {
+        fontSize: 30,
+        color: '#98c135'
     }
 });
 
