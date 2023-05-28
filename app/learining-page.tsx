@@ -199,29 +199,34 @@ const LearningPage = ({navigation}) => {
     }
 
     return (<View style={styles.container}>
-        <View style={{flex: 0.09, borderColor: 'yellow', borderWidth: 1}}>
+        <View style={{flex: 0.09}}>
             <Header/>
         </View>
-        <View style={{flex: 0.20, borderColor: 'red', borderWidth: 1, width: '100%', alignItems: 'center'}}>
-            <ImageBackground source={require('../assets/learning_logo.png')} resizeMode="cover"
-                             style={styles.learningLogo}>
-                <Text style={styles.text}>{category}</Text>
+
+        <View style={{flex: 0.20}}>
+            <ImageBackground source={require('../assets/animal_header.png')}
+                             style={{width: 400, height: 75, flexDirection: 'row'}} resizeMode={"stretch"}>
+                <View style={{width: 130, alignItems: 'center'}}>
+                    <Text style={{color: '#2b2a29', fontWeight:'bold', paddingTop: 50}}>{actualQuestion.id}/{questions.length}</Text>
+                </View>
+                <View style={{width: 285, justifyContent: 'center', alignItems: 'center'}}>
+                    <Text style={{color: '#2b2a29', fontSize: 15, fontWeight:'bold'}}>{category}</Text>
+                </View>
             </ImageBackground>
         </View>
 
         <View style={{
             flex: 0.5,
-            borderColor: 'red',
-            borderWidth: 1,
             width: '100%',
             alignItems: 'center',
             paddingLeft: 10,
             paddingRight: 10
         }}>
-            <Text style={styles.text}>{actualQuestion.value}{actualQuestion.paragraph}</Text>
+            <View style={{paddingTop: 5}}>
+                <Text style={styles.text}>{actualQuestion.value}{actualQuestion.paragraph}</Text>
+            </View>
         </View>
-
-        <View style={{flex: 1.25, borderColor: 'red', borderWidth: 1, width: '100%', alignItems: 'center'}}>
+        <View style={{flex: 1.25, width: '100%', alignItems: 'center'}}>
             <TouchableOpacity disabled={actualQuestion.isButtonsDisabled} onPress={() => handlePickUp('a')}>
                 <AnswerField gradientColours={actualQuestion.possibleAnswer.filter(x => x.id === 'a')[0].gradient}
                              option={actualQuestion.possibleAnswer.filter(x => x.id === 'a')[0].id}
@@ -239,7 +244,7 @@ const LearningPage = ({navigation}) => {
             </TouchableOpacity>
         </View>
 
-        <View style={{flex: 0.25, borderColor: 'red', borderWidth: 1, width: '100%', alignItems: 'center'}}>
+        <View style={{flex: 0.25, width: '100%', alignItems: 'center'}}>
             <View style={{flexDirection: 'row', paddingTop: 15}}>
                 <TouchableOpacity disabled={previousDisabled} onPress={() => handlePreviousQuestion()}>
                     <Image style={{width: 100, height: 55}} source={require('../assets/lewo.png')}/>
@@ -270,7 +275,7 @@ const styles = StyleSheet.create({
     }, text: {
         fontSize: 15,
         color: '#98c135',
-        padding: 5
+        padding: 5,
     }, btnText: {
         fontSize: 15,
         color: '#2b2a29',
@@ -283,7 +288,9 @@ const styles = StyleSheet.create({
         fontSize: 30,
         color: '#98c135'
     }, learningLogo: {
-        width: 350
+        width: 170,
+        height: 100,
+        resizeMode: 'cover'
     }, navImage: {
         width: 50,
         height: 50

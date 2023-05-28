@@ -1,6 +1,8 @@
 import {useEffect, useState} from "react";
 import {Pressable, View, Modal, Image, Text, Alert, StyleSheet, TouchableOpacity} from "react-native";
 import NavigationField from "./navigation-field";
+import Field from "./field";
+import {LinearGradient} from "expo-linear-gradient";
 
 const EndOfModuleModal = ({isModalVisible}) => {
     const [modalVisible, setModalVisible] = useState(false);
@@ -30,7 +32,12 @@ const EndOfModuleModal = ({isModalVisible}) => {
                                source={require('../assets/passed.gif')}
                         />
                         <TouchableOpacity onPress={() => closeModal()}>
-                            <NavigationField text={'ZAMKNIJ'}/>
+                            <View style={{width: 300, height: 10}}/>
+                            <LinearGradient
+                                style={{width: 300, height: 50, alignItems: 'center', justifyContent: 'center'}}
+                                colors={['#94c02b', '#71912a']}>
+                                <Text style={{fontSize:20 , color:'#2b2a29'}}>ZAMKNIJ</Text>
+                            </LinearGradient>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -46,50 +53,23 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 22,
+        backgroundColor:'black'
     },
     modalView: {
         margin: 20,
-        backgroundColor: 'white',
+        backgroundColor: 'black',
+        borderWidth:1,
+        borderColor:'white',
         borderRadius: 20,
         padding: 35,
         alignItems: 'center',
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 4,
-        elevation: 5,
-    },
-    button: {
-        borderRadius: 20,
-        padding: 10,
-        elevation: 2,
-    },
-    buttonOpen: {
-        backgroundColor: '#F194FF',
-    },
-    buttonClose: {
-        backgroundColor: '#2196F3',
-    },
-    textStyle: {
-        color: 'white',
-        fontWeight: 'bold',
-        textAlign: 'center',
     },
     modalText: {
         marginBottom: 15,
         textAlign: 'center',
-    },
-    backgroundVideo: {
-        height: 300,
-        position: "absolute",
-        top: 0,
-        left: 0,
-        alignItems: "stretch",
-        bottom: 0,
-        right: 0
+        color:'white',
+        fontWeight:'bold',
+        fontSize:19
     },
     video: {
         width: 300,

@@ -2,6 +2,7 @@ import {Alert, Image, Modal, StyleSheet, Text, TouchableOpacity, View} from "rea
 import {useEffect, useState} from "react";
 import Field from "./field";
 import NavigationField from "./navigation-field";
+import {LinearGradient} from "expo-linear-gradient";
 
 const FromBeginningModal = ({isModalVisible, userResponse}) => {
 
@@ -34,10 +35,17 @@ const FromBeginningModal = ({isModalVisible, userResponse}) => {
                 <View style={styles.modalView}>
                     <Text style={styles.modalText}>OD POCZĄTKU?</Text>
                     <TouchableOpacity onPress={() => pickYes()}>
-                        <Field text={'TAK'}/>
+                        <LinearGradient style={styles.gradient}
+                                        colors={['#94c02b', '#71912a']}>
+                            <Text style={styles.text}>TAK</Text>
+                        </LinearGradient>
                     </TouchableOpacity>
+                    <View style={{height:10}}/>
                     <TouchableOpacity onPress={() => pickNo()}>
-                        <Field text={'NIE'}/>
+                        <LinearGradient style={styles.gradient}
+                                        colors={['#94c02b', '#71912a']}>
+                            <Text style={styles.text}>NIE</Text>
+                        </LinearGradient>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -51,7 +59,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 22,
-
     },
     modalView: {
         margin: 20,
@@ -61,30 +68,8 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         padding: 35,
         alignItems: 'center',
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 4,
-        elevation: 5,
-    },
-    button: {
-        borderRadius: 20,
-        padding: 10,
-        elevation: 2,
-    },
-    buttonOpen: {
-        backgroundColor: '#F194FF',
-    },
-    buttonClose: {
-        backgroundColor: '#2196F3',
-    },
-    textStyle: {
-        color: 'white',
-        fontWeight: 'bold',
-        textAlign: 'center',
+        justifyContent:'center',
+        width:340,
     },
     modalText: {
         marginBottom: 15,
@@ -92,18 +77,21 @@ const styles = StyleSheet.create({
         color: 'white',
         fontWeight: 'bold'
     },
-    backgroundVideo: {
-        height: 300,
-        position: "absolute",
-        top: 0,
-        left: 0,
-        alignItems: "stretch",
-        bottom: 0,
-        right: 0
-    },
     video: {
         width: 300,
         height: 300
+    },
+    gradient: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#94c02b',
+        width: 300,
+        paddingTop: 20,
+        paddingBottom: 20,
+        fontWeight: 'bold'
+    }, text: {
+        fontSize: 20,
+        color: '#2b2a29'
     }
 });
 

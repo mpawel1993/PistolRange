@@ -36,16 +36,18 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: 1,
-        width: 350,
-        color: '#2b2a29'
+        minWidth:'92%',
+        // width: 340,
+        color: '#2b2a29',
+        minHeight:80
     }, text: {
         fontSize: 13.8,
-        padding: 3
     }, answerOption: {
         color: 'white',
         fontSize: 40,
         paddingRight: 5,
-        backgroundColor: 'black'
+        backgroundColor: 'black',
+        textDecorationLine:'underline'
     }
 });
 
