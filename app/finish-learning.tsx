@@ -23,7 +23,8 @@ const styles = StyleSheet.create({
         borderWidth: 1,
     }, text: {
         fontSize: 20,
-        color: 'white'
+        color: 'white',
+        fontFamily:'Bahnschrift',
     }, button: {
         width: 300,
         resizeMode: 'contain'

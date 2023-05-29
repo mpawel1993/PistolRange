@@ -207,10 +207,10 @@ const LearningPage = ({navigation}) => {
             <ImageBackground source={require('../assets/animal_header.png')}
                              style={{width: 400, height: 75, flexDirection: 'row'}} resizeMode={"stretch"}>
                 <View style={{width: 130, alignItems: 'center'}}>
-                    <Text style={{color: '#2b2a29', fontWeight:'bold', paddingTop: 50}}>{actualQuestion.id}/{questions.length}</Text>
+                    <Text style={{color: '#2b2a29', fontWeight:'bold', paddingTop: 50, fontFamily:'Bahnschrift'}}>{actualQuestion.id}/{questions.length}</Text>
                 </View>
                 <View style={{width: 285, justifyContent: 'center', alignItems: 'center'}}>
-                    <Text style={{color: '#2b2a29', fontSize: 15, fontWeight:'bold'}}>{category}</Text>
+                    <Text style={{color: '#2b2a29', fontSize: 15, fontWeight:'bold', fontFamily:'Bahnschrift'}}>{category}</Text>
                 </View>
             </ImageBackground>
         </View>
@@ -280,7 +280,9 @@ const styles = StyleSheet.create({
         fontSize: 15,
         color: '#98c135',
         padding: 5,
+        fontFamily:'Bahnschrift'
     }, btnText: {
+        fontFamily:'Bahnschrift',
         fontSize: 15,
         color: '#2b2a29',
         padding: 5

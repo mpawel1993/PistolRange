@@ -73,7 +73,8 @@ const styles = StyleSheet.create({
         marginBottom: 15,
         textAlign: 'center',
         color: 'white',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        fontFamily:'Bahnschrift',
     },
     video: {
         width: 300,
@@ -88,6 +89,7 @@ const styles = StyleSheet.create({
         paddingBottom: 20,
         fontWeight: 'bold'
     }, text: {
+        fontFamily:'Bahnschrift',
         fontSize: 20,
         color: '#2b2a29'
     }

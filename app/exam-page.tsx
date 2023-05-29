@@ -171,6 +171,7 @@ const ExamPage = ({navigation}) => {
             }
             setGoodAnswers(goodAnswers);
         });
+        setQuestions(questions);
         setIsExamSummarised(true);
     }
 
@@ -237,7 +238,7 @@ const ExamPage = ({navigation}) => {
                 <TouchableOpacity onPress={() => handleQuit()}>
                     <LinearGradient style={{width: 150, height: 55, alignItems: "center", justifyContent: 'center'}}
                                     colors={['#94c02b', '#71912a']}>
-                        <Text style={{fontSize: 15, color: '#2b2a29',padding: 5}}>KONIEC</Text>
+                        <Text style={{fontSize: 15, color: '#2b2a29',padding: 5, fontFamily:'Bahnschrift'}}>KONIEC</Text>
                     </LinearGradient>
                 </TouchableOpacity>
                 <View style={{width: 10}}/>

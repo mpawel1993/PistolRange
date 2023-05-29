@@ -112,7 +112,7 @@ const SetOfQuestionsPage = ({navigation}) => {
             <View>
                 <TouchableOpacity onPress={() => handleNavigateToAll(categories[0])}>
                     <LinearGradient colors={['#94c02b', '#71912a']} style={styles.gradient}>
-                        <Text style={{fontSize: 20}}>{categories[0]}</Text>
+                        <Text style={{fontSize: 20,fontFamily:'Bahnschrift'}}>{categories[0]}</Text>
                     </LinearGradient>
                 </TouchableOpacity>
             </View>

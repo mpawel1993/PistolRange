@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
         minHeight:80
     }, text: {
         fontSize: 13.8,
+        fontFamily:'Bahnschrift'
     }, answerOption: {
         color: 'white',
         fontSize: 40,

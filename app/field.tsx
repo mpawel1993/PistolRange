@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
         paddingBottom: 20,
         fontWeight: 'bold'
     }, text: {
+        fontFamily:'Bahnschrift',
         fontSize: 20,
         color: '#2b2a29'
     }
