@@ -23,10 +23,9 @@ const ExamPage = ({navigation}) => {
     const [nextButtonDisabled, setNextButtonDisabled] = useState(false);
     const [previousDisabled, setPreviousButtonDisabled] = useState(false);
     const [isSummaryVisible, setIsSummaryVisible] = useState(false);
-    const [finalInfo, setFinalInfo] = useState('');
-    const [isExamPassed, setIsExamPassed] = useState(false);
     const [wasSummaryDisplayed, setWasSummaryDisplayed] = useState(false);
     const [goodAnswers, setGoodAnswers] = useState(0);
+    const [isExamSummarised, setIsExamSummarised] = useState(false);
 
     useEffect(() => {
         let que = params.params.questions.map(x => Object.assign({}, x));
@@ -57,7 +56,7 @@ const ExamPage = ({navigation}) => {
             setNextButtonDisabled(false);
             setPreviousButtonDisabled(true);
         } else if (actualQuestion.id >= questions.length) {
-            setActualQuestion(questions.filter(x => x.id == questions.length)[0])
+            setActualQuestion(questions.filter(x => x.id == questions.length)[0]);
         } else {
             setNextButtonDisabled(false);
             setPreviousButtonDisabled(false);
@@ -73,9 +72,7 @@ const ExamPage = ({navigation}) => {
                 setTime(timerRef.current);
                 setFormattedTime(secondsToHms(timerRef.current));
             }
-            console.log('here' , );
-
-            if (timerRef.current < 0) {
+            if (timerRef.current < 0 && !isExamSummarised) {
                 handleQuit();
             }
         }, 1000);
@@ -107,7 +104,7 @@ const ExamPage = ({navigation}) => {
         question.actualAnswer = undefined;
         question.possibleAnswer.map(x => x.gradient = ['#94c02b', '#71912a']);
         setActualQuestion({...actualQuestion, question});
-        question.possibleAnswer.filter(x => x.id == option)[0].gradient = ['yellow', 'yellow'];
+        question.possibleAnswer.filter(x => x.id == option)[0].gradient = ['#ffff2b', '#ffff2a'];
         question.actualAnswer = option;
         setActualQuestion({...actualQuestion, question});
         questions[actualQuestion.id - 1].actualAnswer = option;
@@ -119,7 +116,7 @@ const ExamPage = ({navigation}) => {
         if (actualQuestion.actualAnswer !== undefined) {
             let nextId = JSON.parse(JSON.stringify(question.id));
             nextId++;
-            let next = questions.filter(x => x.id == nextId)[0]
+            let next = questions.filter(x => x.id == nextId)[0];
             if (nextId === questions.length) {
                 setNextButtonDisabled(true);
             } else {
@@ -133,7 +130,7 @@ const ExamPage = ({navigation}) => {
         const question = JSON.parse(JSON.stringify(actualQuestion));
         let prevId = JSON.parse(JSON.stringify(question.id));
         prevId--;
-        let previous = questions.filter(x => x.id == prevId)[0]
+        let previous = questions.filter(x => x.id == prevId)[0];
         if (prevId === questions.length) {
             setNextButtonDisabled(true);
         } else {
@@ -142,30 +139,39 @@ const ExamPage = ({navigation}) => {
         setActualQuestion(previous);
     }
 
+    const colorGrey = (question: Question) => {
+        question.possibleAnswer.filter(x => x.id == 'a')[0].gradient = ['#6e736e' , '#a1a6a1'];
+        question.possibleAnswer.filter(x => x.id == 'b')[0].gradient = ['#6e736e' , '#a1a6a1'];
+        question.possibleAnswer.filter(x => x.id == 'c')[0].gradient = ['#6e736e' , '#a1a6a1'];
+    }
+
     const summaryExam = () => {
         let goodAnswers = 0;
 
-        questions.map(question => {
-            question.isButtonsDisabled = true;
-            if (question.actualAnswer !== undefined) {
+        questions.map(a => {
+            a.isButtonsDisabled = true;
+        });
 
-                question.possibleAnswer.filter(x => x.id == 'a')[0].gradient = ['grey', 'grey'];
-                question.possibleAnswer.filter(x => x.id == 'b')[0].gradient = ['grey', 'grey'];
-                question.possibleAnswer.filter(x => x.id == 'c')[0].gradient = ['grey', 'grey'];
+        questions.map(question => {
+            if (question.actualAnswer !== undefined) {
+                colorGrey(question);
                 question.possibleAnswer.filter(x => x.id == question.actualAnswer)[0].isPicked = true;
 
                 if (question.actualAnswer === question.goodAnswer) {
-                    question.possibleAnswer.filter(x => x.id == question.actualAnswer)[0].gradient = ['green', 'green'];
+                    question.possibleAnswer.filter(x => x.id == question.actualAnswer)[0].gradient = ['#085908' , '#28a628'];
                     setActualQuestion({...actualQuestion, question});
                     goodAnswers++;
                 } else {
-                    question.possibleAnswer.filter(x => x.id == question.actualAnswer)[0].gradient = ['red', 'red'];
-                    question.possibleAnswer.filter(x => x.id == question.goodAnswer)[0].gradient = ['green', 'green'];
+                    question.possibleAnswer.filter(x => x.id == question.actualAnswer)[0].gradient = ['#500000' , '#740000'];
+                    question.possibleAnswer.filter(x => x.id == question.goodAnswer)[0].gradient = ['#085908' , '#28a628'];
                     setActualQuestion({...actualQuestion, question});
                 }
+            } else {
+                colorGrey(question);
             }
             setGoodAnswers(goodAnswers);
         });
+        setIsExamSummarised(true);
     }
 
     return (<View style={styles.container}>
@@ -183,7 +189,7 @@ const ExamPage = ({navigation}) => {
                     <View style={{flexDirection:'row'}}>
                         <Text style={{color: '#2b2a29', fontSize: 20, fontWeight:'bold'}}>EGZAMIN</Text>
                         <View style={{width: 10}}/>
-                        <Text style={{color: '#2b2a29', fontSize: 20, fontWeight:'bold'}}>{formattedTime}</Text>
+                        <Text style={{color: '#2b2a29', fontSize: 20, fontWeight:'bold'}}>{!isExamSummarised ? formattedTime : '--:--'}</Text>
                     </View>
                 </View>
             </ImageBackground>
@@ -240,7 +246,7 @@ const ExamPage = ({navigation}) => {
                 </TouchableOpacity>
             </View>
         </View>
-        <ExamSummary isModalVisible={isSummaryVisible} good={goodAnswers} navigation={navigation} passed={isExamPassed}/>
+        <ExamSummary isModalVisible={isSummaryVisible} good={goodAnswers} navigation={navigation}/>
     </View>)
 }
 

@@ -2,7 +2,7 @@ import {Alert, Image, Modal, StyleSheet, Text, TouchableOpacity, View} from "rea
 import {useEffect, useState} from "react";
 import {LinearGradient} from "expo-linear-gradient";
 
-const ExamSummary = ({isModalVisible, navigation, passed, good}) => {
+const ExamSummary = ({isModalVisible, navigation, good}) => {
 
     const [modalVisible, setModalVisible] = useState(false);
     useEffect(() => {
@@ -34,7 +34,7 @@ const ExamSummary = ({isModalVisible, navigation, passed, good}) => {
                     <Text style={styles.modalText}>{good == 10 ?
                         <Text style={{color:'green'}}>ZALICZONO</Text> : <Text style={{color:'red'}}>NIE ZALICZONO</Text>}</Text>
                     <Image style={styles.video}
-                           source={passed ? require('../assets/passed.gif') : require('../assets/failed.gif')}
+                           source={good == 10 ? require('../assets/passed.gif') : require('../assets/failed.gif')}
                     />
                     <View style={{flexDirection: 'row'}}>
                         <Text style={styles.modalText}>DOBRZE: {good} </Text>
@@ -44,7 +44,7 @@ const ExamSummary = ({isModalVisible, navigation, passed, good}) => {
                     <View style={{width: 300}}>
                         <Text style={{color: 'white'}}>LEGENDA: </Text>
                         <View style={{height: 5}}/>
-                        <LinearGradient colors={['green', 'green']} style={{
+                        <LinearGradient colors={['#085908' , '#28a628']} style={{
                             height: 30,
                             width: 300,
                             justifyContent: "center",
@@ -53,7 +53,7 @@ const ExamSummary = ({isModalVisible, navigation, passed, good}) => {
                             <Text>PRAWIDŁOWA ODPOWIEDŹ</Text>
                         </LinearGradient>
                         <View style={{height: 5}}/>
-                        <LinearGradient colors={['red', 'red']} style={{
+                        <LinearGradient colors={['#500000' , '#740000']} style={{
                             height: 30,
                             width: 300,
                             justifyContent: "center",
@@ -62,7 +62,7 @@ const ExamSummary = ({isModalVisible, navigation, passed, good}) => {
                             <Text>NIEPRAWIDŁOWA ODPOWIEDŹ</Text>
                         </LinearGradient>
                         <View style={{height: 5}}/>
-                        <LinearGradient colors={['grey', 'grey']} style={{
+                        <LinearGradient colors={['#6e736e' , '#a1a6a1']} style={{
                             height: 30,
                             width: 300,
                             justifyContent: "center",

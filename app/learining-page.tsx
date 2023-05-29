@@ -83,7 +83,7 @@ const LearningPage = ({navigation}) => {
         question.actualAnswer = undefined;
         question.possibleAnswer.map(x => x.gradient = ['#94c02b', '#71912a']);
         setActualQuestion({...actualQuestion, question});
-        question.possibleAnswer.filter(x => x.id == option)[0].gradient = ['yellow', 'yellow'];
+        question.possibleAnswer.filter(x => x.id == option)[0].gradient = ['#ffff2b', '#ffff2a'];
         question.actualAnswer = option;
         setActualQuestion({...actualQuestion, question});
         questions[actualQuestion.id - 1].actualAnswer = option;
@@ -99,12 +99,12 @@ const LearningPage = ({navigation}) => {
             let next = questions.filter(x => x.id == nextId)[0]
             if (next === undefined) {
                 if (question.actualAnswer === question.goodAnswer) {
-                    question.possibleAnswer.filter(x => x.id == question.actualAnswer)[0].gradient = ['green', 'green'];
+                    question.possibleAnswer.filter(x => x.id == question.actualAnswer)[0].gradient = ['#085908' , '#28a628'];
                     setIsSummaryVisible(true);
                     questions[question.id - 1].isButtonsDisabled = true
                     setQuestions(questions);
                 } else {
-                    question.possibleAnswer.filter(x => x.id == question.actualAnswer)[0].gradient = ['red', 'red'];
+                    question.possibleAnswer.filter(x => x.id == question.actualAnswer)[0].gradient = ['#500000' , '#740000'];
                     setActualQuestion({...actualQuestion, question});
                 }
             } else {
@@ -116,13 +116,13 @@ const LearningPage = ({navigation}) => {
                         setPreviousButtonDisabled(false);
                     }
                     if (question.actualAnswer === question.goodAnswer) {
-                        question.possibleAnswer.filter(x => x.id == question.actualAnswer)[0].gradient = ['green', 'green'];
+                        question.possibleAnswer.filter(x => x.id == question.actualAnswer)[0].gradient = ['#085908' , '#28a628'];
                         questions[id - 1].isButtonsDisabled = true
                         setQuestions(questions);
                         setActualQuestion(next);
                         storeData();
                     } else {
-                        question.possibleAnswer.filter(x => x.id == question.actualAnswer)[0].gradient = ['red', 'red'];
+                        question.possibleAnswer.filter(x => x.id == question.actualAnswer)[0].gradient = ['#500000' , '#740000'];
                         setActualQuestion(question);
                     }
                 } else {
